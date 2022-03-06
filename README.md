@@ -16,3 +16,16 @@
 [English](README.md) • [简体中文](README.zh.md)
 
 </div>
+
+
+示例代码：
+```otne
+func main print "Hello, universe";
+函数 主码 终端屏幕 "你好，宇宙";
+```
+
+Otne 密集语法:
+```otne
+FuncMainPrint"Hello,Universe";
+函数主码终端屏幕"你好，宇宙";
+```
