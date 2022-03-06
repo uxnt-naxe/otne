@@ -26,7 +26,7 @@ func main print "42";
 ```
 
 
-示例代码：
+"你好，宇宙" 示例代码：
 ```otne
 func main print "Hello, universe";
 函数 主码 终端屏幕 "你好，宇宙";
