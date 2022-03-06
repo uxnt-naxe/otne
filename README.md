@@ -22,6 +22,7 @@
 示例代码：
 ```otne
 func main print "42";
+func main TerminalScreen "42";
 函数 主码 终端屏幕 "42";
 ```
 
@@ -29,11 +30,13 @@ func main print "42";
 "你好，宇宙" 示例代码：
 ```otne
 func main print "Hello, universe";
+func main TerminalScreen "Hello, universe";
 函数 主码 终端屏幕 "你好，宇宙";
 ```
 
 Otne 密集语法:
 ```otne
 FuncMainPrint"Hello,Universe";
+FuncMainTerminalScreen"Hello, universe";
 函数主码终端屏幕"你好，宇宙";
 ```
