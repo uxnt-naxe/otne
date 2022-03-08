@@ -10,7 +10,6 @@ typedef wchar_t Hchar;
 //文件是utf8编码
 void HWriteTxtFile(Hstring text, Hstring file) {
     wstring_convert<codecvt_utf8<Hchar>> conv;
-    
     ofstream outfile;
     outfile.open(file);
     outfile << conv.to_bytes(text);
