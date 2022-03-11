@@ -31,8 +31,17 @@ int main(int argc, char* argv[]) {
     std::setlocale(LC_ALL, "");  // MinGW gcc / MSVC
     std::ios_base::sync_with_stdio(false);  // Linux gcc
     std::ios::sync_with_stdio(false);    // Linux gcc
+
+
+    i18nString source = OtneReadFile(L"code.txt");
+    wcout << source << endl;
+    wcout << L"----------------------------------" << endl;
+    Htoken(source);
+
+    /*
     for (int i = 0; i < argc ; i++) {
         if (i != 0) { command_func_line(argv[i]); }
     }
+    */
     return 0;
 }
