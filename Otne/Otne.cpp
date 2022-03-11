@@ -4,10 +4,11 @@
 #include <codecvt>
 using namespace std;
 
+/*
 typedef wstring Hstring;
 typedef wchar_t Hchar;
 
-//文件是utf8编码
+// 文件是utf8编码
 void HWriteTxtFile(Hstring text, Hstring file) {
     wstring_convert<codecvt_utf8<Hchar>> conv;
     ofstream outfile;
@@ -33,11 +34,24 @@ Hstring HReadTxtFile(Hstring file)
     ifs.close();
     return str;
 }
+*/
 
 
-int main (){
-  Hstring Hello = L"Hello";
-  HWriteTxtFile(Hello, L"hello.otne");
-  return 0;
+
+int main () {
+
+
+    printf("Hello");
+
+
+    
+
+   // Hstring Hello = L"Hello";
+
+    //HWriteTxtFile(Hello, L"hello.otne");
+    return 0;
 }
+
+
+
 
