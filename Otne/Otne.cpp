@@ -1,57 +1,24 @@
 #include <iostream>
-#include <string>
 #include <fstream>
 #include <codecvt>
+#include <windows.h>
+
+#include "OtneFile.h"
+#include "Otne_utf8.h"
+#include "lexer/lexer.h"
+
 using namespace std;
 
-/*
-typedef wstring Hstring;
-typedef wchar_t Hchar;
+int main(int argc, char* argv[]) {
+    std::setlocale(LC_ALL, "");  // MinGW gcc / MSVC
+    std::ios_base::sync_with_stdio(false);  // Linux gcc
+    std::ios::sync_with_stdio(false);    // Linux gcc
 
-// 文件是utf8编码
-void HWriteTxtFile(Hstring text, Hstring file) {
-    wstring_convert<codecvt_utf8<Hchar>> conv;
-    ofstream outfile;
-    outfile.open(file);
-    outfile << conv.to_bytes(text);
-    outfile.close();
-}
-
-Hstring HReadTxtFile(Hstring file)
-{
-    wstring_convert<codecvt_utf8<Hchar>> conv;
-    string line;
-    Hstring str;
-
-    ifstream ifs(file);
-    if (!ifs) { return L"File open error!"; }
-
-    while (!ifs.eof())
-    {
-        getline(ifs, line);
-        str += conv.from_bytes(line) + L"\n";
-    }
-    ifs.close();
-    return str;
-}
-*/
-
-
-
-int main () {
-
-
-    printf("Hello");
-
-
+    // wcout << "你好，世界" << endl;
     
-
-   // Hstring Hello = L"Hello";
-
-    //HWriteTxtFile(Hello, L"hello.otne");
-    return 0;
+    i18nString source = OtneReadFile(L"code.txt");
+    
+    wcout << source << endl;
+    wcout << L"----------------------------------" << endl;
+    Htoken(source);
 }
-
-
-
-
