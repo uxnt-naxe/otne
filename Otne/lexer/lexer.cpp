@@ -220,37 +220,18 @@ void lexer(i18nString Text) {
             token = L"";
         }
         else {
-
             wcout << ch;
-
             ch = Text[stlPos++];
         }
         */
 
 
 
+
     }
 }
 
-/*
-        else if (ch == L'(') {
-            bool s = 1;
-            token += ch;
-            while (s)
-            {
-                stlPos++;
-                ch = Text[stlPos];
-                token += ch;
-                if (ch == L')') { s = 0; }
-            }
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
-            wcout << token;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            token = L"";
-            stlPos++;
-        }
-        */
+
 
 
 

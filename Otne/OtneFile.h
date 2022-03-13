@@ -8,53 +8,22 @@
 
 using namespace std;
 
-void HWriteTxtFile(i18nString text, i18nString file) {
-    wstring_convert<codecvt_utf8<i18nChar>> conv;
-    ofstream ofs(file);
-    ofs << conv.to_bytes(text);
-    ofs.close();
-}
-
-
-i18nString HReadTxtFile(i18nString file)
+i18nString OtneReadFile(string filename)
 {
-    wstring_convert<codecvt_utf8<i18nChar>> conv;
-    string line;
-    i18nString str;
-    ifstream ifs(file);
-    if (!ifs) { return file + L" " + L"File Open Error!"; }
-    while (!ifs.eof())
+    i18nChar text[4096];
+    i18nString content;
+    FILE *file;
+    file = fopen(filename.c_str(), "rt+,ccs=UTF-8");
+    if (file == NULL)
     {
-        getline(ifs, line);
-        str += conv.from_bytes(line) + L"\n";
+        return L"File Open Error!";
     }
-    ifs.close();
-    return str;
-}
-
-
-
-i18nString OtneReadFile(i18nString file) {
-    wstring_convert<codecvt_utf8<i18nChar>> conv;
-    ifstream ifs(file);
-    string line;
-    i18nString str;
-    if (!ifs) { return file + L" " + L"File Open Error!"; }
-    while (!ifs.eof()) {
-        getline(ifs, line);
-        str += conv.from_bytes(line) + L"\n";
+    while (fgetws(text, 4096, file))
+    {
+        content += wstring(text);
     }
-    ifs.close();
-    return str;
+    fclose(file);
+    return content;
 }
 
-
-void OtneWriteFile(i18nString text, i18nString file) {
-    wstring_convert<codecvt_utf8<i18nChar>> conv;
-    ofstream ofs(file);
-    ofs << conv.to_bytes(text);
-    ofs.close();
-}
-
-
-#endif /*_OTNE_FILE_HPP*/
+#endif
