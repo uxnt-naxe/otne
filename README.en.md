@@ -19,21 +19,30 @@ Why Otne? Otne is a 2068 future programming language in "Koton Ation" novels and
 In Douglas Adams's science fiction "a guide to the galaxy", a group of highly intelligent aliens specially built a supercomputer - "deep thought" to calculate in order to find the ultimate answer to life, the universe and anything. "Deep thinking" took 7.5 million years to calculate and verify, and the final answer is "42".
 Example code:
 ```otne
-func main print "42";
-func main TerminalScreen "42";
-函数 主码 终端屏幕 "42";
+import TerminalScreen;
+
+func main(){
+    printf("42");
+    TerminalScreen("42");
+}
+
+// func main print "42";
+// func main TerminalScreen "42";
+// 函数 主码 终端屏幕 "42";
 ```
 
 "Hello, universe" example code:
 ```otne
-func main print "Hello, universe";
-func main TerminalScreen "Hello, universe";
-函数 主码 终端屏幕 "你好，宇宙";
+import TerminalScreen;
+
+func main(){
+    printf("Hello, Universe");
+    TerminalScreen("Hello, Universe");
+}
+
+
+// func main print "Hello, Universe";
+// func main TerminalScreen "Hello, Universe";
+// 函数 主码 终端屏幕 "你好，宇宙";
 ```
 
-Otne intensive syntax:
-```otne
-FuncMainPrint"Hello,Universe";
-FuncMainTerminalScreen"Hello, universe";
-函数主码终端屏幕"你好，宇宙";
-```
