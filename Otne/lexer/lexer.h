@@ -1,5 +1,7 @@
-#ifndef _lexer_h
-#define _lexer_h
+#ifndef _LEXER_H
+#define _LEXER_H
+
 #include "../Otne_utf8.h"
-void Htoken(i18nString Text);
-#endif /* _lexer_h */
+void lexer(i18nString Text);
+
+#endif

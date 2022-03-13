@@ -9,46 +9,51 @@
 
 using namespace std;
 
-i18nString key[] =
+
+
+template<class T>
+
+int getLength(T& arr)
 {
-    L"import", L"func", L"main", L"num", L"text", L"bool", L"return",
-    L"导入", L"函数", L"主码", L"数存", L"文本", L"布尔", L"返回"
+    return sizeof(arr) / sizeof(arr[0]);
+}
+
+
+i18nString KeyWord[] = {
+    L"import", 
+    L"static", 
+    L"func", L"num", L"text", L"string", 
+    L"return", 
+    L"bool", L"true", L"false", L"null", 
+    L"if", L"elif", L"else", L"for", L"while", L"break" 
 };
 
-
-
-
-
-
-int isKey(i18nString token)
-{
-    for (int i = 0; i < 14; i++)
-    {
-        if (token == key[i])
-        {
-            return true;
+int isKeyWord(i18nString token) {
+    for (int i = 0; i < getLength(KeyWord); i++) {
+        if (token == KeyWord[i]) { 
+            return true; 
         }
     }
     return false;
 }
 
-bool isChar(i18nChar ch)
-{
+bool isEnglish(i18nChar ch) {
     if ((ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z')) { return true; }
     else { return false; }
 }
 
-bool isEChar(i18nChar ch)
-{
+bool isRussian(i18nChar ch) {
     if ((ch >= L'а' && ch <= L'я') || (ch >= L'А' && ch <= L'Я')) { return true; }
     else { return false; }
 }
 
+bool isChinese(i18nChar ch) {
+    if ((ch >= L'一' && ch <= L'龥')) { return true; }
+    else { return false; }
+}
 
-
-bool isZHchar(i18nChar ch)
-{
-    if ((ch >= L'一' && ch <= L'龥') || isChar(ch)) { return true; }
+bool isText(i18nChar ch) {
+    if (isEnglish(ch) || isChinese(ch)) { return true; }
     else { return false; }
 }
 
@@ -61,8 +66,8 @@ bool isNum(i18nChar ch)
 
 
 
-// 自制词法分析器
-void Htoken(i18nString Text) {
+// 词法分析器 lexer  Token
+void lexer(i18nString Text) {
     i18nChar ch;
     int stlPos = 0;
     i18nString token = L"";
@@ -70,13 +75,13 @@ void Htoken(i18nString Text) {
     while (stlPos < Text.length()) {
         ch = Text[stlPos];
 
-        if (isZHchar(ch)) {
-            while (isZHchar(ch)) {
+        if (isText(ch)) {
+            while (isText(ch)) {
                 token += ch;
                 stlPos++;
                 ch = Text[stlPos];
             }
-            if (isKey(token)) {
+            if (isKeyWord(token)) {
                 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
                 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
                 wcout << token;
@@ -226,26 +231,6 @@ void Htoken(i18nString Text) {
 
     }
 }
-
-
-
-
-
-
-/*
-// 中引
-导入 终端屏幕;
-函数 主码()
-{
-    终端屏幕("你好，宇宙");
-}
-*/
-
-
-
-
-
-
 
 /*
         else if (ch == L'(') {

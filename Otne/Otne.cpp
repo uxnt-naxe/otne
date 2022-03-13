@@ -23,25 +23,43 @@ void command_func_line(string str) {
         i18nString source = OtneReadFile(conv.from_bytes(str));
         //wcout << source << endl;
         //wcout << L"----------------------------------" << endl;
-        Htoken(source);
+        lexer(source);
     }
 }
 
 int main(int argc, char* argv[]) {
-    std::setlocale(LC_ALL, "");  // MinGW gcc / MSVC
-    std::ios_base::sync_with_stdio(false);  // Linux gcc
-    std::ios::sync_with_stdio(false);    // Linux gcc
 
+    std::setlocale(LC_ALL, "");              // MinGW gcc / MSVC
+    std::ios_base::sync_with_stdio(false);   // Linux gcc
+    std::ios::sync_with_stdio(false);        // Linux gcc
 
-    i18nString source = OtneReadFile(L"code.txt");
+    i18nString source = OtneReadFile(L"code.otne");
     wcout << source << endl;
     wcout << L"----------------------------------" << endl;
-    Htoken(source);
+    lexer(source);
 
     /*
     for (int i = 0; i < argc ; i++) {
         if (i != 0) { command_func_line(argv[i]); }
     }
     */
+
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,4 +7,4 @@ using namespace std;
 typedef wstring i18nString;
 typedef wchar_t i18nChar;
 
-#endif /*_OTNE_UTF8_HPP*/
+#endif
