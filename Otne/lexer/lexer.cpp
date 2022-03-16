@@ -190,6 +190,17 @@ void lexer(i18nString Text) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
         /*
         if (isZHchar(ch)) {
             token += ch;

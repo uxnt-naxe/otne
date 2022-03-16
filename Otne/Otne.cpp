@@ -3,7 +3,7 @@
 #include <codecvt>
 #include <windows.h>
 
-#include "OtneFile.h"
+#include "OtneFile/OtneFile.h"
 #include "Otne_utf8.h"
 #include "lexer/lexer.h"
 

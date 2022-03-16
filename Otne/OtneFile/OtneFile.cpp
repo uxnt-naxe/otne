@@ -1,10 +1,8 @@
-#ifndef _OTNE_FILE_HPP
-#define _OTNE_FILE_HPP
-
 #include <iostream>
 #include <fstream>
 #include <codecvt>
-#include "Otne_utf8.h"
+#include "../Otne_utf8.h"
+#include "OtneFile.h"
 
 using namespace std;
 
@@ -25,5 +23,3 @@ i18nString OtneReadFile(string filename)
     fclose(file);
     return content;
 }
-
-#endif

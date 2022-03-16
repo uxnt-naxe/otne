@@ -17,6 +17,9 @@ x64/
 Debug/
 Release/
 
+#vs2022
+CMakeSettings.json
+
 
 # MacOS
 .DS_Store/
