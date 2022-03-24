@@ -1,23 +1,13 @@
 #include <iostream>
-#include <windows.h>
-#include <iostream>
 #include <fstream>
 #include <codecvt>
 
 #include "../Otne_utf8.h"
 #include "lexer.h"
-
 using namespace std;
 
-
-
 template<class T>
-
-int getLength(T& arr)
-{
-    return sizeof(arr) / sizeof(arr[0]);
-}
-
+int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
 
 i18nString KeyWord[] = {
     L"import", 
@@ -66,11 +56,15 @@ bool isNum(i18nChar ch)
 
 
 
-// 词法分析器 lexer  Token
+
+// ch = Text[stlPos];
+// wcout << ch;
+// stlPos++;
+// 词法分析器 Lexer Token
 void lexer(i18nString Text) {
-    i18nChar ch;
-    int stlPos = 0;
     i18nString token = L"";
+    int stlPos = 0;
+    i18nChar ch;
 
     while (stlPos < Text.length()) {
         ch = Text[stlPos];
@@ -82,19 +76,42 @@ void lexer(i18nString Text) {
                 ch = Text[stlPos];
             }
             if (isKeyWord(token)) {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-                wcout << token;
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+                wcout << token << " <identifier>" << endl;
+                token = L"";
+            } else {
+                wcout << token << " <name>" << endl;
                 token = L"";
             }
-            else {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
-                wcout << token;
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+        }
+
+        else if (ch == L'/') {
+            stlPos++;
+            ch = Text[stlPos];
+            if (ch == L'/') {
+                stlPos++;
+                ch = Text[stlPos];
+                while (ch != 0 && ch != L'\n') {
+                    token += ch;
+                    stlPos++;
+                    ch = Text[stlPos];
+                }
+               // wcout << token << L" <注释>" << endl;
                 token = L"";
             }
+        }
+
+
+        else if (ch == L'\"') {
+            stlPos++;
+            ch = Text[stlPos];
+            while (ch != 0 && ch != L'\"') {
+                token += ch;
+                stlPos++;
+                ch = Text[stlPos];
+            }
+            wcout << token << L" <字符串>" << endl;
+            token = L"";
+            stlPos++;
         }
 
 
@@ -104,141 +121,30 @@ void lexer(i18nString Text) {
                 stlPos++;
                 ch = Text[stlPos];
             }
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-            wcout << token;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+            wcout << token << L" <数学>" << endl;
             token = L"";
         }
 
-        else if (ch == L'(') {
-
-            token += ch;
+        else if (ch == L'\'') {
             stlPos++;
             ch = Text[stlPos];
-
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
-            wcout << token;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            token = L"";
-        }
-        else if (ch == L')') {
-
-            token += ch;
-            stlPos++;
-            ch = Text[stlPos];
-
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
-            wcout << token;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            token = L"";
-        }
-
-        else if (ch == L'{') {
-
-            token += ch;
-            stlPos++;
-            ch = Text[stlPos];
-
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-            wcout << token;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            token = L"";
-        }
-        else if (ch == L'}') {
-
-            token += ch;
-            stlPos++;
-            ch = Text[stlPos];
-
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-            wcout << token;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            token = L"";
-        }
-
-
-
-        else if (ch == L'\"') {
-            bool s = 1;
-            token += ch;
-            while (s)
-            {
+            while (ch != 0 && ch != L'\'') {
+                token += ch;
                 stlPos++;
                 ch = Text[stlPos];
-                token += ch;
-                if (ch == L'\"') { s = 0; }
             }
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
-            wcout << token;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+            wcout << token << L" <字符>" << endl;
             token = L"";
             stlPos++;
         }
 
+
+
+
         else {
-            wcout << ch;
+            // wcout << ch;
             stlPos++;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        if (isZHchar(ch)) {
-            token += ch;
-            while (isZHchar(ch)) {
-                ch = Text[stlPos++];
-                //stlPos++;
-                token += ch;
-            }
-            if (isKey(token)) {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-                wcout << token;
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-                token = L"";
-            }
-        }
-        else if (ch == L'\"') {
-            bool ol = 1;
-            token += ch;
-            while(ol)
-            {
-                ch = Text[stlPos++];
-                token += ch;
-                if (ch == L'\"') { ol = 0; }
-            }
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-            wcout << token;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-            token = L"";
-        }
-        else {
-            wcout << ch;
-            ch = Text[stlPos++];
-        }
-        */
-
-
-
-
     }
 }
 
@@ -247,6 +153,180 @@ void lexer(i18nString Text) {
 
 
 
+
+/*
+func main () {
+}
+
+#include <stdio.h>
+
+int main()
+{
+    // 我的第一个 C 程序
+printf("Hello, World! \n");
+
+return 0;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ch = Text[stlPos];
+
+if (isText(ch)) {
+    while (isText(ch)) {
+        token += ch;
+        stlPos++;
+        ch = Text[stlPos];
+    }
+    if (isKeyWord(token)) {
+        wcout << token;
+        token = L"";
+    }
+    else {
+        wcout << token;
+        token = L"";
+    }
+}
+else {
+    wcout << ch;
+    stlPos++;
+}
+*/
+
+
+
+
+/*
+else if (isNum(ch)) {
+    while (isNum(ch) || (ch == L'.')) {
+        token += ch;
+        stlPos++;
+        ch = Text[stlPos];
+    }
+    wcout << token;
+    token = L"";
+}
+
+else if (ch == L'(') {
+
+    token += ch;
+    stlPos++;
+    ch = Text[stlPos];
+
+    wcout << token;
+
+    token = L"";
+}
+else if (ch == L')') {
+
+    token += ch;
+    stlPos++;
+    ch = Text[stlPos];
+
+    wcout << token;
+    token = L"";
+}
+
+else if (ch == L'{') {
+
+    token += ch;
+    stlPos++;
+    ch = Text[stlPos];
+
+    wcout << token;
+    token = L"";
+}
+else if (ch == L'}') {
+
+    token += ch;
+    stlPos++;
+    ch = Text[stlPos];
+    wcout << token;
+    token = L"";
+}
+
+
+
+else if (ch == L'\"') {
+    bool s = 1;
+    token += ch;
+    while (s)
+    {
+        stlPos++;
+        ch = Text[stlPos];
+        token += ch;
+        if (ch == L'\"') { s = 0; }
+    }
+    wcout << token;
+    token = L"";
+    stlPos++;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+if (isZHchar(ch)) {
+    token += ch;
+    while (isZHchar(ch)) {
+        ch = Text[stlPos++];
+        //stlPos++;
+        token += ch;
+    }
+    if (isKey(token)) {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
+        wcout << token;
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+        token = L"";
+    }
+}
+else if (ch == L'\"') {
+    bool ol = 1;
+    token += ch;
+    while(ol)
+    {
+        ch = Text[stlPos++];
+        token += ch;
+        if (ch == L'\"') { ol = 0; }
+    }
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+    wcout << token;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+    token = L"";
+}
+else {
+    wcout << ch;
+    ch = Text[stlPos++];
+}
+*/
 
 
 

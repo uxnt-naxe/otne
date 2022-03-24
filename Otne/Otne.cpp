@@ -27,7 +27,6 @@ for (int i = 0; i < argc ; i++) {
 */
 
 /*
-
 func main () {
 }
 
