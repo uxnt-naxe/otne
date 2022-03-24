@@ -35,7 +35,7 @@ func main () {
 
 int main()
 {
-    // ÎÒµÄµÚÒ»¸ö C ³ÌĞò
+    // æˆ‘çš„ç¬¬ä¸€ä¸ª C ç¨‹åº
 printf("Hello, World! \n");
 
 return 0;
