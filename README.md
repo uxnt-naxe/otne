@@ -21,8 +21,8 @@ Otne/中引编程语言是2022年3月6日开始，一门免费开源的翻译编
 在道格拉斯·亚当斯创作的科幻小说《银河系漫游指南》中，有一群具有高度智慧的外星人为了找出生命、宇宙以及任何事情的终极答案，特别造了一台超级电脑——“深思”（Deep Thought）来进行计算。“深思”花了750万年来计算和验证，最终得出的答案是“42”。
 示例代码：
 ```otne
-import TerminalScreen;
-
+// import TerminalScreen;
+plug "TerminalScreen";
 func main(){
     printf("42");
     TerminalScreen("42");
@@ -36,8 +36,8 @@ func main(){
 
 "你好，宇宙" 示例代码：
 ```otne
-import TerminalScreen;
-
+// import TerminalScreen;
+plug "TerminalScreen";
 func main(){
     printf("Hello, Universe");
     TerminalScreen("Hello, Universe");
