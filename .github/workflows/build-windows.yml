@@ -1,0 +1,28 @@
+name: build-windows
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: cmake_config
+        run: |
+          sudo apt install mingw-w64 -y
+          mkdir build && cd build
+          cmake .. -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++
+      - name: make
+        run: cmake --build build
+      - name: remove useless files
+        run: rm -rf .git; rm -rf $(find . | grep ".cpp") ; rm -rf $(find . | grep ".h"); rm -rf $(find . | grep ".hpp")
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.3.0
+        with:
+          name: windows
+          path: build
