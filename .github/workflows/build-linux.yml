@@ -1,0 +1,31 @@
+name: build-linux
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: prepare
+        run: | 
+            sudo apt install mingw-w64 -y
+            sudo apt install cmake -y
+      - name: cmake_config
+        run: |
+            mkdir build && cd build
+            cmake ..
+      - name: make
+        run: cmake --build build
+      - name: remove useless files
+        run: rm -rf .git; rm -rf $(find . | grep ".cpp") ; rm -rf $(find . | grep ".h"); rm -rf $(find . | grep ".hpp")
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.3.0
+        with:
+          name: linux
+          path: build
