@@ -22,10 +22,10 @@ Otne/中引编程语言是2022年3月6日开始，一门免费开源的翻译编
 示例代码：
 ```c
 // import TerminalScreen;
-plug "TerminalScreen";
+plug "TerminalScreen"
 func main(){
-    printf("42");
-    TerminalScreen("42");
+    printf("42")
+    TerminalScreen("42")
 }
 
 // func main print "42";
@@ -37,10 +37,10 @@ func main(){
 "你好，宇宙" 示例代码：
 ```c
 // import TerminalScreen;
-plug "TerminalScreen";
+plug "TerminalScreen"
 func main(){
-    printf("Hello, Universe");
-    TerminalScreen("Hello, Universe");
+    printf("Hello, Universe")
+    TerminalScreen("Hello, Universe")
 }
 
 
