@@ -24,7 +24,7 @@ Otne/中引编程语言是2022年3月6日开始，一门免费开源的翻译编
 plug "terminal"
 func main(){
     printf("42")
-    TerminalScreen("42")
+    Terminal("42")
 }
 // import TerminalScreen;
 // func main print "42";
@@ -38,7 +38,7 @@ func main(){
 plug "terminal"
 func main(){
     printf("Hello, Universe")
-    TerminalScreen("Hello, Universe")
+    Terminal("Hello, Universe")
 }
 
 // import TerminalScreen;
