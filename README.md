@@ -5,7 +5,7 @@
 
 ### Otne（Type-dev测试版）
   
-Otne Type-dev测试版（跨平台）
+Otne Type Dev 测试版（跨平台）
 
 </div>
 
