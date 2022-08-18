@@ -3,9 +3,9 @@
 <h1><img src="otne.svg" alt="Logo" width="180" height="180"></h1>
 </a>
 
-### Otne（Type-dev测试版）
+### Gtne（Type-dev测试版）
   
-Otne Type Dev 测试版（跨平台）
+Gtne ype Dev 测试版（跨平台）
 
 </div>
 
