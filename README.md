@@ -31,6 +31,14 @@ import "stdio"
 fn main () {
     printf("Hello, World !")
 }
+
+#inlude <stdio.h>
+int main () {
+    printf("Hello, World !");
+    return 0;
+}
+
+
 // fn main print "Hello, World !";
 // func main print "Hello, World !";
 ```
