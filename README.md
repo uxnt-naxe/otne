@@ -22,7 +22,7 @@ Otne/中引编程语言是2022年3月6日开始，一门免费开源的翻译编
 示例代码：
 ```kt
 import "terminal"
-fn main() {
+fn main () {
     printf("42")
     Terminal("42")
 }
@@ -37,7 +37,7 @@ fn main() {
 "你好，宇宙" 示例代码：
 ```kt
 import "terminal"
-fn main() {
+fn main () {
     printf("Hello, Universe")
     Terminal("Hello, Universe")
 }
