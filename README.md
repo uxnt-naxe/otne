@@ -8,7 +8,7 @@
 
 bplm和otne 离不开plug关键词的。Otne语法很像Go和java语法这样。
 
-Otne/中引编程语言是2022年3月6日开始仿CPP语法设计改进，一门免费开源的翻译编程语言，由 Uxnt 开发。 
+Otne/中引编程语言是2022年3月6日开始仿CPP语法设计改进，一门新的语法编程语言，由 Uxnt 开发。 
 
 [简体中文](README.md) • [English](README.en.md)  
 
