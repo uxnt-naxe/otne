@@ -4,7 +4,7 @@
 </a>
 </div>
 
-# Otne（中引编程语言）
+# Otne 0.0.0.1 (中引编程语言)
 
 bplm和otne 离不开plug关键词的。Otne语法很像Go和java语法这样。
 
