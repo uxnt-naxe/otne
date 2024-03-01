@@ -3,16 +3,16 @@
 #include <codecvt>
 
 #include "otne_utf8.h"
-#include "otnelexer.h"
+#include "lexer.h"
 using namespace std;
 
 template<class T>
 int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
 
 i18nString KeyWord[] = {
-    L"import", 
+    L"plug", 
     L"static", 
-    L"func", L"num", L"text", L"string", 
+    L"fn", L"num", L"text", L"string", 
     L"return", 
     L"bool", L"true", L"false", L"null", 
     L"if", L"elif", L"else", L"for", L"while", L"break" 
