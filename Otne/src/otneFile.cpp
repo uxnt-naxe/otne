@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <codecvt>
-#include "../Otne_utf8.h"
-#include "OtneFile.h"
+#include "otne_utf8.h"
+#include "otneFile.h"
 
 using namespace std;
 

@@ -2,8 +2,8 @@
 #include <fstream>
 #include <codecvt>
 
-#include "../Otne_utf8.h"
-#include "lexer.h"
+#include "otne_utf8.h"
+#include "otnelexer.h"
 using namespace std;
 
 template<class T>

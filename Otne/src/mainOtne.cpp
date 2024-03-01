@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <codecvt>
-#include "OtneFile/OtneFile.h"
-#include "Otne_utf8.h"
-#include "lexer/lexer.h"
+#include "otneFile.h"
+#include "otne_utf8.h"
+#include "otnelexer.h"
 using namespace std;
 
 
