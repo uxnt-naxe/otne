@@ -12,10 +12,7 @@ add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-finput-charset=utf-8>")
 
 
 file(GLOB SRCS
-    ${PROJECT_SOURCE_DIR}
-	"${PROJECT_SOURCE_DIR}/include/*"
-	"${PROJECT_SOURCE_DIR}/src/*"
-	"${PROJECT_SOURCE_DIR}/src/Otne.cpp"
+	"src/*"
 )
 
 add_executable (Otne ${SRCS})
