@@ -1,4 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.16)
+set(CMAKE_CXX_STANDARD 17)
 
 # MSVC utf-8
 add_compile_options("$<$<C_COMPILER_ID:MSVC>:/source-charset:utf-8>")
