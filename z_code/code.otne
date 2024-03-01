@@ -1,0 +1,5 @@
+// hello world!
+plug "stdio"
+func main () {
+    printf("hello world!")
+}

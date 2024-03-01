@@ -1,0 +1,16 @@
+import TerminalScreen.qweqwe.qweqwe;
+
+func NaxeHello(Text code, num nums) {
+    printf("Hello World!" + code);
+}
+
+func main() {
+    
+    printf("Hello, Universe");
+    TerminalScreen("Hello, Universe");
+
+    num wer = 1;
+    var we = 1;
+    Text estf = "Hello World!";
+
+}
