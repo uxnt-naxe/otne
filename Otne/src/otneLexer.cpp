@@ -6,6 +6,7 @@
 #include "otneLexer.h"
 using namespace std;
 
+
 template<class T>
 int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
 
