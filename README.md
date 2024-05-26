@@ -19,8 +19,6 @@ module stdio;
 fn main () {
     printf("42")
 }
-// fn main print "42";
-// func main print "42";
 ```
 
 "你好，世界" 示例代码：
@@ -29,9 +27,5 @@ module stdio;
 fn main () {
     printf("Hello, World !")
 }
-
-
-// fn main print "Hello, World !";
-// func main print "Hello, World !";
 ```
 
