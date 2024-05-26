@@ -11,20 +11,12 @@
 
 [简体中文](README.md) • [English](resources/README.en.md)  
 
-
-打印42示例代码：
-```kt
-module stdio;
-func main () {
-    printf("42");
-}
-```
-
 "你好，世界" 示例代码：
 ```kt
 module stdio;
 func main () {
     printf("Hello, World !");
+    printf("42");
 }
 ```
 
