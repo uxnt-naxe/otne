@@ -6,6 +6,7 @@
 #include "otne_lexer.hpp"
 using namespace std;
 
+
 /*
 bool isRussian(i18nChar ch) {
     if ((ch >= L'а' && ch <= L'я') || (ch >= L'А' && ch <= L'Я')) { return true; }
@@ -27,6 +28,7 @@ bool isDigit(i18nChar ch) {
     else { return false; }
 }
 
+
 bool isAlpha(i18nChar ch) {
     if ((ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z')) { return true; }
     else { return false; }
@@ -37,9 +39,10 @@ template<class T>
 int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
 
 i18nString KeyWord[] = {
-    L"plug",  L"module",
+    L"module",
     L"static", 
-    L"fn", L"num", L"text", L"string", 
+    L"class",
+    L"func", L"int", L"string", 
     L"return", 
     L"bool", L"true", L"false", L"null", 
     L"if", L"elif", L"else", L"for", L"while", L"break" 
@@ -59,13 +62,9 @@ int isKeyWord(i18nString token) {
 
 
 
-
-
-
-
-
-
-
+// row表示行，col表示列
+int row = 1;
+int col = 1;
 
 
 
@@ -79,10 +78,33 @@ void lexer(i18nString Text) {
     i18nChar ch;
 
     while (stlPos < Text.length()) {
-        ch = Text[stlPos];
 
-        if (isText(ch)) {
-            while (isText(ch)) {
+        
+        ch = Text[stlPos];
+    
+
+        if(ch == L'\n')
+        {
+            row++;
+            col = 1;
+            stlPos++;
+        }
+        
+
+        
+        
+
+        
+
+
+
+        /*
+
+
+        
+
+        if (isAlpha(ch)) {
+            while (isAlpha(ch)) {
                 token += ch;
                 stlPos++;
                 ch = Text[stlPos];
@@ -128,8 +150,8 @@ void lexer(i18nString Text) {
         }
 
 
-        else if (isNum(ch)) {
-            while (isNum(ch) || (ch == L'.')) {
+        else if (isDigit(ch)) {
+            while (isDigit(ch) || (ch == L'.')) {
                 token += ch;
                 stlPos++;
                 ch = Text[stlPos];
@@ -151,13 +173,18 @@ void lexer(i18nString Text) {
             stlPos++;
         }
 
+        */
+
 
 
 
         else {
             // wcout << ch;
             stlPos++;
+            col++;
         }
+        
+        wcout << "\""<< ch << "\"" << L" row: " << row << L" col: " << col << endl;
     }
 }
 
