@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 
-project ("otne")
+project(otne)
 
-add_subdirectory ("otne")
+add_subdirectory(otne)
