@@ -10,7 +10,8 @@ Gtne ype Dev 测试版（跨平台）
 </div>
 
 
-42 示例代码：
+42示例代码
+main.gtne:
 ```c
 import terminal;
 func main()
@@ -21,7 +22,8 @@ func main()
 ```
 
 
-"你好，宇宙" 示例代码：
+"你好，宇宙" 示例代码
+main.gtne:
 ```c
 import terminal;
 func main()
