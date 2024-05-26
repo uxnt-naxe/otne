@@ -11,7 +11,7 @@ Otne Programing Language is a free and open source translation programming langu
 
 Why Otne? Otne is a 2068 future programming language in "Koton Ation" novels and science fiction films. It uses an atomic furnace to make Otne (ultra-high-tech era).
 
-[简体中文](README.md) • [English](README.en.md)  
+[简体中文](README.md) • [English](resources/README.en.md)  
 
 </div>
 

@@ -10,7 +10,7 @@ bplm和otne 离不开plug/module/import关键词的。Otne语法很像Go和java�
 
 Otne/中引编程语言是2022年3月6日开始仿CPP语法设计改进，一门新的语法编程语言，由 Uxnt 开发。 
 
-[简体中文](README.md) • [English](README.en.md)  
+[简体中文](README.md) • [English](resources/README.en.md)  
 
 
 打印42示例代码：
