@@ -16,7 +16,7 @@ Otne/中引编程语言是2022年3月6日开始仿CPP语法设计改进，一门
 打印42示例代码：
 ```kt
 module stdio;
-fn main () {
+func main () {
     printf("42")
 }
 ```
@@ -24,7 +24,7 @@ fn main () {
 "你好，世界" 示例代码：
 ```kt
 module stdio;
-fn main () {
+func main () {
     printf("Hello, World !")
 }
 ```
