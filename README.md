@@ -12,20 +12,22 @@ Gtne ype Dev 测试版（跨平台）
 
 42 示例代码：
 ```c
-plug "terminal"
-fn main(){
-    printf("42")
-    Terminal("42")
+import terminal;
+func main()
+{
+    printf("42");
+    Terminal("42");
 }
 ```
 
 
 "你好，宇宙" 示例代码：
 ```c
-plug "terminal"
-fn main(){
-    printf("Hello, Universe")
-    Terminal("Hello, Universe")
+import terminal;
+func main()
+{
+    printf("Hello, Universe");
+    Terminal("Hello, Universe");
 }
 ```
 
