@@ -3,7 +3,7 @@
 #include <codecvt>
 
 #include "otne_utf8.h"
-#include "otneLexer.h"
+#include "otne_lexer.hpp"
 using namespace std;
 
 
