@@ -6,6 +6,32 @@
 #include "otne_lexer.hpp"
 using namespace std;
 
+/*
+bool isRussian(i18nChar ch) {
+    if ((ch >= L'а' && ch <= L'я') || (ch >= L'А' && ch <= L'Я')) { return true; }
+    else { return false; }
+}
+bool isChinese(i18nChar ch) {
+    if ((ch >= L'一' && ch <= L'龥')) { return true; }
+    else { return false; }
+}
+bool isText(i18nChar ch) {
+    if (isEnglish(ch) || isChinese(ch)) { return true; }
+    else { return false; }
+}
+*/
+
+
+bool isDigit(i18nChar ch) {
+    if (ch >= L'0' && ch <= L'9') { return true; }
+    else { return false; }
+}
+
+bool isAlpha(i18nChar ch) {
+    if ((ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z')) { return true; }
+    else { return false; }
+}
+
 
 template<class T>
 int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
@@ -21,10 +47,6 @@ i18nString KeyWord[] = {
 
 
 
-
-
-
-
 int isKeyWord(i18nString token) {
     for (int i = 0; i < getLength(KeyWord); i++) {
         if (token == KeyWord[i]) { 
@@ -34,31 +56,14 @@ int isKeyWord(i18nString token) {
     return false;
 }
 
-bool isEnglish(i18nChar ch) {
-    if ((ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z')) { return true; }
-    else { return false; }
-}
 
-bool isRussian(i18nChar ch) {
-    if ((ch >= L'а' && ch <= L'я') || (ch >= L'А' && ch <= L'Я')) { return true; }
-    else { return false; }
-}
 
-bool isChinese(i18nChar ch) {
-    if ((ch >= L'一' && ch <= L'龥')) { return true; }
-    else { return false; }
-}
 
-bool isText(i18nChar ch) {
-    if (isEnglish(ch) || isChinese(ch)) { return true; }
-    else { return false; }
-}
 
-bool isNum(i18nChar ch)
-{
-    if (ch >= L'0' && ch <= L'9') { return true; }
-    else { return false; }
-}
+
+
+
+
 
 
 
