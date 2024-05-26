@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <codecvt>
-#include "otne_utf8.h"
+#include "otne_utf8.hpp"
 
 using namespace std;
 
