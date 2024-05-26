@@ -1,6 +1,8 @@
 import TerminalScreen.qweqwe.qweqwe;
+module TerminalScreen.qweqwe.qweqwe;
 
-func NaxeHello(Text code, num nums) {
+
+func NaxeHello(string code, uint num) {
     printf("Hello World!" + code);
 }
 
@@ -11,6 +13,6 @@ func main() {
 
     num wer = 1;
     var we = 1;
-    Text estf = "Hello World!";
+    string str = "Hello World!";
 
 }
