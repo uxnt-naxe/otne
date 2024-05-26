@@ -2,7 +2,7 @@
 #include <fstream>
 #include <codecvt>
 
-#include "otne_utf8.h"
+#include "otne_utf8.hpp"
 #include "otne_lexer.hpp"
 using namespace std;
 
