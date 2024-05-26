@@ -1,5 +1,6 @@
-import TerminalScreen.qweqwe.qweqwe;
-module TerminalScreen.qweqwe.qweqwe;
+import TerminalScreen.a.b;
+// module TerminalScreen;
+
 
 
 func NaxeHello(string code, uint num) {

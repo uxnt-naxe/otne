@@ -16,4 +16,4 @@ file(GLOB SRCS
 	"src/*"
 )
 
-add_executable (Otne ${SRCS})
+add_executable (otne ${SRCS})

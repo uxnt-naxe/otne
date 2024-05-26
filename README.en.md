@@ -2,7 +2,7 @@
 
 <div align="center">
 <a href="#">
-<h1><img src="otne.svg" alt="Logo" width="180" height="180"></h1>
+<h1><img src="resources/otne.svg" alt="Logo" width="180" height="180"></h1>
 </a>
 
 ### Otne Programing Language

@@ -12,7 +12,8 @@ int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, "");          // Linux MinGW GCC MSVC
     ios::sync_with_stdio(false);    // Linux gcc     
-    i18nString source = OtneReadFile("code.otne");
+    i18nString source = OtneReadFile("main.otne");
+    // i18nString source = OtneReadFile("resources/code/main.otne");
     wcout << source << endl;
     wcout << L"----------------------------------" << endl;
     lexer(source);

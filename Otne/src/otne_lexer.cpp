@@ -83,7 +83,8 @@ void lexer(i18nString Text) {
                 ch = Text[stlPos];
             }
             if (isKeyWord(token)) {
-                wcout << token << " <identifier>" << endl;
+                wcout << token << " <ID>" << endl;
+                // wcout << token << " <identifier>" << endl;
                 token = L"";
             } else {
                 wcout << token << " <name>" << endl;
@@ -116,7 +117,7 @@ void lexer(i18nString Text) {
                 stlPos++;
                 ch = Text[stlPos];
             }
-            wcout << token << L" <字符串>" << endl;
+            wcout << token << L" <string>" << endl;
             token = L"";
             stlPos++;
         }
@@ -128,7 +129,7 @@ void lexer(i18nString Text) {
                 stlPos++;
                 ch = Text[stlPos];
             }
-            wcout << token << L" <数学>" << endl;
+            wcout << token << L" <int>" << endl;
             token = L"";
         }
 
@@ -140,7 +141,7 @@ void lexer(i18nString Text) {
                 stlPos++;
                 ch = Text[stlPos];
             }
-            wcout << token << L" <字符>" << endl;
+            wcout << token << L" <char>" << endl;
             token = L"";
             stlPos++;
         }

@@ -1,5 +1,6 @@
 // hello world!
-module stdio;
+// module
+import stdio;
 
 func main () {
     printf("hello world!");
