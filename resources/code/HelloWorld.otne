@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 // "module"."module".rrr
 
 zh > test = "qwe" ; ~
-=======
+
 // hello world!
 // module
 import stdio;
@@ -10,4 +9,3 @@ import stdio;
 func main () {
     printf("hello world!");
 }
->>>>>>> 9fc9235449293040764df7d8703ea75317defeb1
