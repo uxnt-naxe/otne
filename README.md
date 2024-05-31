@@ -16,7 +16,6 @@
 module stdio;
 func main () {
     printf("Hello, World !");
-    printf("42");
 }
 ```
 
