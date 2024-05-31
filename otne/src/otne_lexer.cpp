@@ -62,35 +62,33 @@ int isKeyWord(i18nString token) {
 
 
 
-// row表示行，col表示列
-int row = 1;
-int col = 1;
 
 
 
+// index
 // ch = Text[stlPos];
 // wcout << ch;
 // stlPos++;
 // 词法分析器 Lexer Token
 void lexer(i18nString Text) {
     i18nString token = L"";
-    int stlPos = 0;
+    
+    // row表示行，col表示列，index表示指数
+    int row = 1;
+    int col = 1;
+    int index = 0;
     i18nChar ch;
 
-    while (stlPos < Text.length()) {
+    while (index < Text.length()) {
 
-        
-        ch = Text[stlPos];
+        ch = Text[index];
     
-
         if(ch == L'\n')
         {
             row++;
             col = 1;
-            stlPos++;
+            index++;
         }
-        
-
         
         
 
@@ -180,7 +178,7 @@ void lexer(i18nString Text) {
 
         else {
             // wcout << ch;
-            stlPos++;
+            index++;
             col++;
         }
         
