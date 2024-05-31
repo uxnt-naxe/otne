@@ -62,6 +62,71 @@ int isKeyWord(i18nString token) {
 
 
 
+int m_idx = 0;  // index表示指数
+
+ // row表示行，col表示列，index表示指数
+int row = 1;
+int col = 1;
+
+i18nString m_str = L"";
+i18nString token = L"";
+i18nChar   scan_ch;
+
+
+void next() { 
+    m_idx++;    // index
+}
+
+i18nChar next_ch() {
+    if (m_idx >= m_str.length()) {
+        return '\0';
+    }
+    return m_str[m_idx];
+}
+
+i18nString scan_string() {
+    i18nString str = L"";
+    next();
+    while (
+        next_ch() != L'\0' &&
+        next_ch() != L'\"'
+        ){
+        str += next_ch();
+        next();
+    }
+    next();
+    return str;
+}
+
+i18nString scan_identifier() {
+    i18nString str = L"";
+    while (
+        isAlpha(next_ch()) || 
+        next_ch() == L'_' || 
+        isDigit(next_ch()) 
+        ){
+        str += next_ch();
+        next();
+    }
+    m_idx--;
+    return str;
+}
+
+
+
+
+void scan_Annotation() {
+    next();
+    if (next_ch() == '/') {
+        next();
+        // 跳过双斜线注释内容
+        while (next_ch() != '\0' && next_ch() != '\n') {
+            next();
+        }
+        // continue; // 继续解析下一个Token
+    }
+}
+
 
 
 
@@ -71,26 +136,78 @@ int isKeyWord(i18nString token) {
 // stlPos++;
 // 词法分析器 Lexer Token
 void lexer(i18nString Text) {
-    i18nString token = L"";
+    m_str = Text;
     
-    // row表示行，col表示列，index表示指数
-    int row = 1;
-    int col = 1;
-    int index = 0;
-    i18nChar ch;
+    while (m_idx < Text.length()) {
 
-    while (index < Text.length()) {
-
-        ch = Text[index];
+        scan_ch = Text[m_idx];
     
-        if(ch == L'\n')
+        if(scan_ch == L'\n')
         {
-            row++;
-            col = 1;
-            index++;
+            // row++;
+            // col = 1;
+            // next();
+            next();
+        }
+        else if (scan_ch == L' ')
+        {
+            next();
+        }
+        else if (scan_ch == L'/')
+        {
+            scan_Annotation();
+        }
+
+        // else if (isDigit(scan_ch))
+        // {
+        //     wcout << "\""<< scan_ch << "\"" << L" isDigit " << L" m_idx: " << m_idx << endl;
+        // }
+        else if (scan_ch == L'\"')
+        {
+            wcout << "\""<< scan_string() << "\"" << L" scan_string " << L" m_idx: " << m_idx << endl;
+        }
+        else if (scan_ch == L'.')
+        {
+            wcout << "\""<< scan_ch << "\"" << L" scan_. " << L" m_idx: " << m_idx << endl;
+            next();
+        }
+        else if (scan_ch == L'>')
+        {
+            wcout << "\""<< scan_ch << "\"" << L" scan_func_> " << L" m_idx: " << m_idx << endl;
+            next();
+        }
+
+        else if (scan_ch == L'=')
+        {
+            wcout << "\""<< scan_ch << "\"" << L" scan_= " << L" m_idx: " << m_idx << endl;
+            next();
+        }
+
+
+        else if (scan_ch == L';')
+        {
+            wcout << "\""<< scan_ch << "\"" << L" scan_end " << L" m_idx: " << m_idx << endl;
+            next();
+        }
+        else if (scan_ch == L'~')
+        {
+            wcout << "\""<< scan_ch << "\"" << L" scan_func_end " << L" m_idx: " << m_idx << endl;
+            next();
+        }
+        else if (isAlpha(scan_ch))
+        {
+            wcout << "\""<< scan_identifier() << "\"" << L" scan_identifier " << L" m_idx: " << m_idx << endl;
+            next();
+        }
+        else
+        {
+            wcout << "\""<< scan_ch << "\"" << L" 不明 " << m_idx << endl;
+            next();
         }
         
         
+        
+
 
         
 
@@ -176,13 +293,13 @@ void lexer(i18nString Text) {
 
 
 
-        else {
-            // wcout << ch;
-            index++;
-            col++;
-        }
+       // else {
+       //     // wcout << ch;
+       //     m_idx++;
+       //     col++;
+       // }
         
-        wcout << "\""<< ch << "\"" << L" row: " << row << L" col: " << col << endl;
+        // wcout << "\""<< ch << "\"" << L" m_idx: " << m_idx << endl;
     }
 }
 
