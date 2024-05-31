@@ -1,6 +1,0 @@
-import TerminalScreen;
-
-func main(){
-    printf("Hello, Universe");
-    TerminalScreen("Hello, Universe");
-}
