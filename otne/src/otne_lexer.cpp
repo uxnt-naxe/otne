@@ -9,7 +9,7 @@ using namespace std;
 
 /*
 bool isRussian(i18nChar ch) {
-    if ((ch >= L'а' && ch <= L'я') || (ch >= L'А' && ch <= L'Я')) { return true; }
+    if ((ch >= L'a' && ch <= L'я') || (ch >= L'A' && ch <= L'Я')) { return true; }
     else { return false; }
 }
 bool isChinese(i18nChar ch) {
