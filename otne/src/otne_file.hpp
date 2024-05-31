@@ -1,5 +1,6 @@
-#ifndef _OTNE_FILE_HPP
-#define _OTNE_FILE_HPP
+#pragma once
+// #ifndef _OTNE_FILE_HPP
+// #define _OTNE_FILE_HPP
 
 #include <iostream>
 #include <fstream>
@@ -10,4 +11,4 @@ using namespace std;
 
 i18nString OtneReadFile(string filename);
 
-#endif
+// #endif
