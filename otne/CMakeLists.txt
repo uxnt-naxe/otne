@@ -16,6 +16,6 @@ file(GLOB SRCS
 	"src/*"
 )
 
-set(EXECUTABLE_OUTPUT_PATH "../../")
+# set(EXECUTABLE_OUTPUT_PATH "../../")
 
 add_executable (otne ${SRCS})
