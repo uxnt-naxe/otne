@@ -1,11 +1,11 @@
 // import TerminalScreen.a.b;
-module TerminalScreen;
+import TerminalScreen;
 
-func NaxeHello(string code, uint num) {
+fn NaxeHello(string code, uint num) {
     printf("Hello World!" + code);
 }
 
-func main() {
+fn main() {
     printf("Hello, Universe");
     TerminalScreen("Hello, Universe");
     int wer = 1;
