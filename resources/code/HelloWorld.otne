@@ -6,6 +6,6 @@ zh > test = "qwe" ; ~
 // module
 import stdio;
 // func
-func main () {
+fn main () {
     printf("hello world!");
 }
