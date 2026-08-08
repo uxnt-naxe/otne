@@ -39,10 +39,10 @@ template<class T>
 int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
 
 i18nString KeyWord[] = {
-    L"module",
+    L"import",
     L"static", 
     L"class",
-    L"func", L"int", L"string", 
+    L"fn", L"int", L"string", 
     L"return", 
     L"bool", L"true", L"false", L"null", 
     L"if", L"elif", L"else", L"for", L"while", L"break" 
