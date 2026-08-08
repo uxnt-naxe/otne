@@ -18,11 +18,8 @@ import stdio;
 func main () {
     printf("Hello, World !");
 }
-```
 
-```kt
-import stdio;
-fn main () {
+fn main1 () {
     printf("Hello, World !")
 }
-```
+
