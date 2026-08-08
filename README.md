@@ -8,7 +8,7 @@
 
 # otne 0.0.1 (中引编程语言)
 
-"otne编程语言"是由"Uxnt"开发的，并且从2022年3月6日开始，该语言参照Java的语法进行了设计和改进，成为了一门新的编程语言。
+"otne编程语言"是由Uxnt和uxnt-naxe开发的，并且从2022年3月6日开始，该语言参照Java的语法进行了设计和改进，成为了一门新的编程语言。
 
 [简体中文](README.md) • [English](resources/README.en.md)  
 
