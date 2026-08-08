@@ -14,14 +14,14 @@
 
 "你好，世界" 示例代码：
 ```kt
-import  stdio;
+import stdio;
 func main () {
     printf("Hello, World !");
 }
 ```
 
 ```kt
-import  stdio;
+import stdio;
 fn main () {
     printf("Hello, World !")
 }
