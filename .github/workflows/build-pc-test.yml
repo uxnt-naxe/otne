@@ -101,9 +101,11 @@ jobs:
 
       - name: run (windows cross via wine)
         if: matrix.name == 'windows'
-        # run: wine build/bin/otne.exe resources/code/HelloWorld.otne
-        run: build/bin/otne.exe resources/code/HelloWorld.otne
-
+        run: |
+          cp $(find /usr -name "libgcc_s_seh-1.dll" | head -1) build/bin/
+          cp $(find /usr -name "libstdc++-6.dll" | head -1) build/bin/
+          wine build/bin/otne.exe resources/code/HelloWorld.otne
+          
       - name: run (macos)
         if: matrix.name == 'macos'
         run: ./build/bin/otne resources/code/HelloWorld.otne
