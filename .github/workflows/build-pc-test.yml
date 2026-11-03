@@ -101,7 +101,7 @@ jobs:
 
       - name: run (windows cross via wine)
         if: matrix.name == 'windows'
-        run: wine build/otne.exe resources/code/HelloWorld.otne
+        run: wine build/bin/otne.exe resources/code/HelloWorld.otne
 
       - name: run (macos)
         if: matrix.name == 'macos'
