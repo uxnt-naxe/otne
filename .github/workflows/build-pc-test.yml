@@ -42,7 +42,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt update
-          sudo apt install clang lld gcc g++ cmake mingw-w64 -y
+          sudo apt install clang lld gcc g++ cmake mingw-w64 wine64 -y
 
       - name: prepare (macos)
         if: matrix.os == 'macos-latest'
@@ -95,6 +95,18 @@ jobs:
       - name: make
         run: cmake --build build
 
+      - name: run (linux)
+        if: matrix.name == 'linux'
+        run: ./build/otne resources/code/HelloWorld.otne
+
+      - name: run (windows cross via wine)
+        if: matrix.name == 'windows'
+        run: wine build/otne.exe resources/code/HelloWorld.otne
+
+      - name: run (macos)
+        if: matrix.name == 'macos'
+        run: ./build/otne resources/code/HelloWorld.otne
+
       - name: remove useless files
         run: |
           rm -rf .git
@@ -126,6 +138,9 @@ jobs:
 
       - name: make
         run: cmake --build build --config Release
+
+      - name: run
+        run: .\build\Release\otne.exe resources/code/HelloWorld.otne
 
       - name: remove useless files
         run: |
