@@ -97,7 +97,7 @@ jobs:
 
       - name: run (linux)
         if: matrix.name == 'linux'
-        run: ./build/otne resources/code/HelloWorld.otne
+        run: ./build/bin/otne resources/code/HelloWorld.otne
 
       - name: run (windows cross via wine)
         if: matrix.name == 'windows'
@@ -105,7 +105,7 @@ jobs:
 
       - name: run (macos)
         if: matrix.name == 'macos'
-        run: ./build/otne resources/code/HelloWorld.otne
+        run: ./build/bin/otne resources/code/HelloWorld.otne
 
       - name: remove useless files
         run: |
