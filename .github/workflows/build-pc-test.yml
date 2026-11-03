@@ -140,8 +140,7 @@ jobs:
         run: cmake --build build --config Release
 
       - name: run
-        run: .\build\bin\otne.exe resources/code/HelloWorld.otne
-
+        run: .\build\bin\Release\otne.exe resources\code\HelloWorld.otne
       - name: remove useless files
         run: |
           rm -rf .git
