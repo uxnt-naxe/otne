@@ -1,0 +1,18 @@
+// Types.otne —— 值类型、类型标注与内建函数
+
+func describe(value: any): string {
+    return type(value) + ": " + value;
+}
+
+func main() {
+    let count: int = 42;
+    float ratio = 0.5;
+    const name = "Otne";
+
+    println(describe(count));
+    println(describe(ratio));
+    println(describe(name));
+    println("length = " + len(name));
+    println(count / 5);
+    println(ratio * 2);
+}

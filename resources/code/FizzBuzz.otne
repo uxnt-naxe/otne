@@ -1,0 +1,15 @@
+// FizzBuzz.otne —— if / elif / else 与取模运算
+
+func main() {
+    for (let n = 1; n <= 20; n += 1) {
+        if (n % 15 == 0) {
+            println("FizzBuzz");
+        } elif (n % 3 == 0) {
+            println("Fizz");
+        } elif (n % 5 == 0) {
+            println("Buzz");
+        } else {
+            println(n);
+        }
+    }
+}

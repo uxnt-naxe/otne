@@ -1,14 +1,13 @@
-// import TerminalScreen.a.b;
-import TerminalScreen;
+// HelloUniverse.otne —— 函数、参数类型与字符串拼接
 
-fn NaxeHello(string code, uint num) {
-    printf("Hello World!" + code);
+import stdio;
+
+func greet(name: string): string {
+    return "Hello, " + name + "!";
 }
 
-fn main() {
-    printf("Hello, Universe");
-    TerminalScreen("Hello, Universe");
-    int wer = 1;
-    var we = 1;
-    string str = "Hello World!";
+func main() {
+    println(greet("Universe"));
+    println(greet("中引"));
+    println("1 + 2 = " + (1 + 2));
 }

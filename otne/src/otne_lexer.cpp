@@ -1,488 +1,392 @@
-#include <iostream>
-#include <fstream>
-#include <codecvt>
-
-#include "otne_utf8.hpp"
 #include "otne_lexer.hpp"
-using namespace std;
 
+#include <unordered_map>
+#include <utility>
 
-/*
-bool isRussian(i18nChar ch) {
-    if ((ch >= L'a' && ch <= L'я') || (ch >= L'A' && ch <= L'Я')) { return true; }
-    else { return false; }
-}
-bool isChinese(i18nChar ch) {
-    if ((ch >= L'一' && ch <= L'龥')) { return true; }
-    else { return false; }
-}
-bool isText(i18nChar ch) {
-    if (isEnglish(ch) || isChinese(ch)) { return true; }
-    else { return false; }
-}
-*/
+namespace otne {
 
+namespace {
 
-bool isDigit(i18nChar ch) {
-    if (ch >= L'0' && ch <= L'9') { return true; }
-    else { return false; }
-}
+bool IsAsciiDigit(i18nChar ch) { return ch >= L'0' && ch <= L'9'; }
+bool IsAsciiAlpha(i18nChar ch) { return (ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z'); }
+// 标识符：ASCII 字母或下划线开头
+bool IsIdentifierStart(i18nChar ch) { return IsAsciiAlpha(ch) || ch == L'_'; }
+bool IsIdentifierPart(i18nChar ch) { return IsIdentifierStart(ch) || IsAsciiDigit(ch); }
 
-
-bool isAlpha(i18nChar ch) {
-    if ((ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z')) { return true; }
-    else { return false; }
-}
-
-
-template<class T>
-int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
-
-i18nString KeyWord[] = {
-    L"import",
-    L"static", 
-    L"class",
-    L"fn", L"int", L"string", 
-    L"return", 
-    L"bool", L"true", L"false", L"null", 
-    L"if", L"elif", L"else", L"for", L"while", L"break" 
-};
-
-
-
-int isKeyWord(i18nString token) {
-    for (int i = 0; i < getLength(KeyWord); i++) {
-        if (token == KeyWord[i]) { 
-            return true; 
-        }
-    }
-    return false;
-}
-
-
-
-
-int m_idx = 0;  // index表示指数
-
- // row表示行，col表示列，index表示指数
-int row = 1;
-int col = 1;
-
-i18nString m_str = L"";
-i18nString token = L"";
-i18nChar   scan_ch;
-
-
-void next() { 
-    m_idx++;    // index
-}
-
-i18nChar next_ch() {
-    if (m_idx >= m_str.length()) {
-        return '\0';
-    }
-    return m_str[m_idx];
-}
-
-i18nString scan_string() {
-    i18nString str = L"";
-    next();
-    while (
-        next_ch() != L'\0' &&
-        next_ch() != L'\"'
-        ){
-        str += next_ch();
-        next();
-    }
-    next();
-    return str;
-}
-
-i18nString scan_identifier() {
-    i18nString str = L"";
-    while (
-        isAlpha(next_ch()) || 
-        next_ch() == L'_' || 
-        isDigit(next_ch()) 
-        ){
-        str += next_ch();
-        next();
-    }
-    m_idx--;
-    return str;
-}
-
-
-
-
-void scan_Annotation() {
-    next();
-    if (next_ch() == '/') {
-        next();
-        // 跳过双斜线注释内容
-        while (next_ch() != '\0' && next_ch() != '\n') {
-            next();
-        }
-        // continue; // 继续解析下一个Token
-    }
-}
-
-
-
-
-// index
-// ch = Text[stlPos];
-// wcout << ch;
-// stlPos++;
-// 词法分析器 Lexer Token
-void lexer(i18nString Text) {
-    m_str = Text;
-    
-    while (m_idx < Text.length()) {
-
-        scan_ch = Text[m_idx];
-    
-        if(scan_ch == L'\n')
-        {
-            // row++;
-            // col = 1;
-            // next();
-            next();
-        }
-        else if (scan_ch == L' ')
-        {
-            next();
-        }
-        else if (scan_ch == L'/')
-        {
-            scan_Annotation();
-        }
-
-        // else if (isDigit(scan_ch))
-        // {
-        //     wcout << "\""<< scan_ch << "\"" << L" isDigit " << L" m_idx: " << m_idx << endl;
-        // }
-        else if (scan_ch == L'\"')
-        {
-            wcout << "\""<< scan_string() << "\"" << L" scan_string " << L" m_idx: " << m_idx << endl;
-        }
-        else if (scan_ch == L'.')
-        {
-            wcout << "\""<< scan_ch << "\"" << L" scan_. " << L" m_idx: " << m_idx << endl;
-            next();
-        }
-        else if (scan_ch == L'>')
-        {
-            wcout << "\""<< scan_ch << "\"" << L" scan_func_> " << L" m_idx: " << m_idx << endl;
-            next();
-        }
-
-        else if (scan_ch == L'=')
-        {
-            wcout << "\""<< scan_ch << "\"" << L" scan_= " << L" m_idx: " << m_idx << endl;
-            next();
-        }
-
-
-        else if (scan_ch == L';')
-        {
-            wcout << "\""<< scan_ch << "\"" << L" scan_end " << L" m_idx: " << m_idx << endl;
-            next();
-        }
-        else if (scan_ch == L'~')
-        {
-            wcout << "\""<< scan_ch << "\"" << L" scan_func_end " << L" m_idx: " << m_idx << endl;
-            next();
-        }
-        else if (isAlpha(scan_ch))
-        {
-            wcout << "\""<< scan_identifier() << "\"" << L" scan_identifier " << L" m_idx: " << m_idx << endl;
-            next();
-        }
-        else
-        {
-            wcout << "\""<< scan_ch << "\"" << L" 不明 " << m_idx << endl;
-            next();
-        }
-        
-        
-        
-
-
-        
-
-
-
-        /*
-
-
-        
-
-        if (isAlpha(ch)) {
-            while (isAlpha(ch)) {
-                token += ch;
-                stlPos++;
-                ch = Text[stlPos];
-            }
-            if (isKeyWord(token)) {
-                wcout << token << " <ID>" << endl;
-                // wcout << token << " <identifier>" << endl;
-                token = L"";
-            } else {
-                wcout << token << " <name>" << endl;
-                token = L"";
-            }
-        }
-
-        else if (ch == L'/') {
-            stlPos++;
-            ch = Text[stlPos];
-            if (ch == L'/') {
-                stlPos++;
-                ch = Text[stlPos];
-                while (ch != 0 && ch != L'\n') {
-                    token += ch;
-                    stlPos++;
-                    ch = Text[stlPos];
-                }
-               // wcout << token << L" <注释>" << endl;
-                token = L"";
-            }
-        }
-
-
-        else if (ch == L'\"') {
-            stlPos++;
-            ch = Text[stlPos];
-            while (ch != 0 && ch != L'\"') {
-                token += ch;
-                stlPos++;
-                ch = Text[stlPos];
-            }
-            wcout << token << L" <string>" << endl;
-            token = L"";
-            stlPos++;
-        }
-
-
-        else if (isDigit(ch)) {
-            while (isDigit(ch) || (ch == L'.')) {
-                token += ch;
-                stlPos++;
-                ch = Text[stlPos];
-            }
-            wcout << token << L" <int>" << endl;
-            token = L"";
-        }
-
-        else if (ch == L'\'') {
-            stlPos++;
-            ch = Text[stlPos];
-            while (ch != 0 && ch != L'\'') {
-                token += ch;
-                stlPos++;
-                ch = Text[stlPos];
-            }
-            wcout << token << L" <char>" << endl;
-            token = L"";
-            stlPos++;
-        }
-
-        */
-
-
-
-
-       // else {
-       //     // wcout << ch;
-       //     m_idx++;
-       //     col++;
-       // }
-        
-        // wcout << "\""<< ch << "\"" << L" m_idx: " << m_idx << endl;
-    }
-}
-
-
-
-
-
-
-
-/*
-func main () {
-}
-
-#include <stdio.h>
-
-int main()
+// 关键字表
+const std::unordered_map<i18nString, TokenType>& KeyWords()
 {
-    // 我的第一个 C 程序
-printf("Hello, World! \n");
-
-return 0;
+    static const std::unordered_map<i18nString, TokenType> keywords = {
+        {L"import", TokenType::Import},     {L"func", TokenType::Func},
+        {L"let", TokenType::Let},           {L"var", TokenType::Var},
+        {L"const", TokenType::Const},       {L"if", TokenType::If},
+        {L"elif", TokenType::Elif},         {L"else", TokenType::Else},
+        {L"while", TokenType::While},       {L"for", TokenType::For},
+        {L"break", TokenType::Break},       {L"continue", TokenType::Continue},
+        {L"return", TokenType::Return},     {L"true", TokenType::True},
+        {L"false", TokenType::False},       {L"null", TokenType::Null},
+        {L"int", TokenType::IntType},       {L"float", TokenType::FloatType},
+        {L"string", TokenType::StringType}, {L"bool", TokenType::BoolType},
+        {L"any", TokenType::AnyType},
+    };
+    return keywords;
 }
-*/
 
+}  // namespace
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-ch = Text[stlPos];
-
-if (isText(ch)) {
-    while (isText(ch)) {
-        token += ch;
-        stlPos++;
-        ch = Text[stlPos];
+const char* TokenTypeName(TokenType type)
+{
+    switch (type) {
+    case TokenType::Number: return "NUMBER";
+    case TokenType::String: return "STRING";
+    case TokenType::Identifier: return "IDENTIFIER";
+    case TokenType::Import: return "IMPORT";
+    case TokenType::Func: return "FUNC";
+    case TokenType::Let: return "LET";
+    case TokenType::Var: return "VAR";
+    case TokenType::Const: return "CONST";
+    case TokenType::If: return "IF";
+    case TokenType::Elif: return "ELIF";
+    case TokenType::Else: return "ELSE";
+    case TokenType::While: return "WHILE";
+    case TokenType::For: return "FOR";
+    case TokenType::Break: return "BREAK";
+    case TokenType::Continue: return "CONTINUE";
+    case TokenType::Return: return "RETURN";
+    case TokenType::True: return "TRUE";
+    case TokenType::False: return "FALSE";
+    case TokenType::Null: return "NULL";
+    case TokenType::IntType: return "TYPE_INT";
+    case TokenType::FloatType: return "TYPE_FLOAT";
+    case TokenType::StringType: return "TYPE_STRING";
+    case TokenType::BoolType: return "TYPE_BOOL";
+    case TokenType::AnyType: return "TYPE_ANY";
+    case TokenType::LeftParen: return "LEFT_PAREN";
+    case TokenType::RightParen: return "RIGHT_PAREN";
+    case TokenType::LeftBrace: return "LEFT_BRACE";
+    case TokenType::RightBrace: return "RIGHT_BRACE";
+    case TokenType::Comma: return "COMMA";
+    case TokenType::Semicolon: return "SEMICOLON";
+    case TokenType::Colon: return "COLON";
+    case TokenType::Plus: return "PLUS";
+    case TokenType::Minus: return "MINUS";
+    case TokenType::Star: return "STAR";
+    case TokenType::Slash: return "SLASH";
+    case TokenType::Percent: return "PERCENT";
+    case TokenType::Assign: return "ASSIGN";
+    case TokenType::EqualEqual: return "EQUAL_EQUAL";
+    case TokenType::Bang: return "BANG";
+    case TokenType::BangEqual: return "BANG_EQUAL";
+    case TokenType::Less: return "LESS";
+    case TokenType::LessEqual: return "LESS_EQUAL";
+    case TokenType::Greater: return "GREATER";
+    case TokenType::GreaterEqual: return "GREATER_EQUAL";
+    case TokenType::AndAnd: return "AND_AND";
+    case TokenType::OrOr: return "OR_OR";
+    case TokenType::PlusAssign: return "PLUS_ASSIGN";
+    case TokenType::MinusAssign: return "MINUS_ASSIGN";
+    case TokenType::StarAssign: return "STAR_ASSIGN";
+    case TokenType::SlashAssign: return "SLASH_ASSIGN";
+    case TokenType::PercentAssign: return "PERCENT_ASSIGN";
+    case TokenType::EndOfFile: return "EOF";
+    case TokenType::Invalid: return "INVALID";
     }
-    if (isKeyWord(token)) {
-        wcout << token;
-        token = L"";
-    }
-    else {
-        wcout << token;
-        token = L"";
-    }
-}
-else {
-    wcout << ch;
-    stlPos++;
-}
-*/
-
-
-
-
-/*
-else if (isNum(ch)) {
-    while (isNum(ch) || (ch == L'.')) {
-        token += ch;
-        stlPos++;
-        ch = Text[stlPos];
-    }
-    wcout << token;
-    token = L"";
+    return "UNKNOWN";
 }
 
-else if (ch == L'(') {
-
-    token += ch;
-    stlPos++;
-    ch = Text[stlPos];
-
-    wcout << token;
-
-    token = L"";
-}
-else if (ch == L')') {
-
-    token += ch;
-    stlPos++;
-    ch = Text[stlPos];
-
-    wcout << token;
-    token = L"";
-}
-
-else if (ch == L'{') {
-
-    token += ch;
-    stlPos++;
-    ch = Text[stlPos];
-
-    wcout << token;
-    token = L"";
-}
-else if (ch == L'}') {
-
-    token += ch;
-    stlPos++;
-    ch = Text[stlPos];
-    wcout << token;
-    token = L"";
-}
-
-
-
-else if (ch == L'\"') {
-    bool s = 1;
-    token += ch;
-    while (s)
-    {
-        stlPos++;
-        ch = Text[stlPos];
-        token += ch;
-        if (ch == L'\"') { s = 0; }
-    }
-    wcout << token;
-    token = L"";
-    stlPos++;
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-if (isZHchar(ch)) {
-    token += ch;
-    while (isZHchar(ch)) {
-        ch = Text[stlPos++];
-        //stlPos++;
-        token += ch;
-    }
-    if (isKey(token)) {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-        wcout << token;
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-        token = L"";
+bool IsTypeKeyword(TokenType type)
+{
+    switch (type) {
+    case TokenType::IntType:
+    case TokenType::FloatType:
+    case TokenType::StringType:
+    case TokenType::BoolType:
+    case TokenType::AnyType: return true;
+    default: return false;
     }
 }
-else if (ch == L'\"') {
-    bool ol = 1;
-    token += ch;
-    while(ol)
-    {
-        ch = Text[stlPos++];
-        token += ch;
-        if (ch == L'\"') { ol = 0; }
+
+const char* TokenTypeSpelling(TokenType type)
+{
+    switch (type) {
+    case TokenType::LeftParen: return "'('";
+    case TokenType::RightParen: return "')'";
+    case TokenType::LeftBrace: return "'{'";
+    case TokenType::RightBrace: return "'}'";
+    case TokenType::Comma: return "','";
+    case TokenType::Semicolon: return "';'";
+    case TokenType::Colon: return "':'";
+    case TokenType::Identifier: return "标识符";
+    default: return TokenTypeName(type);
     }
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-    wcout << token;
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-    token = L"";
 }
-else {
-    wcout << ch;
-    ch = Text[stlPos++];
+
+Lexer::Lexer(const i18nString& source) : source_(source) {}
+
+i18nChar Lexer::Peek(std::size_t offset) const
+{
+    const std::size_t index = position_ + offset;
+    return index < source_.size() ? source_[index] : L'\0';
 }
-*/
 
+i18nChar Lexer::Advance()
+{
+    const i18nChar ch = source_[position_];
+    ++position_;
+    if (ch == L'\n') {
+        ++line_;
+        column_ = 1;
+    } else {
+        ++column_;
+    }
+    return ch;
+}
 
+bool Lexer::Match(i18nChar expected)
+{
+    if (Peek() != expected) {
+        return false;
+    }
+    Advance();
+    return true;
+}
 
- 
+void Lexer::Emit(std::vector<Token>& tokens, TokenType type, const i18nString& lexeme,
+                 int line, int column)
+{
+    Token token;
+    token.type = type;
+    token.lexeme = lexeme;
+    token.line = line;
+    token.column = column;
+    tokens.push_back(std::move(token));
+}
+
+void Lexer::SkipLineComment()
+{
+    Advance();
+    Advance();
+    while (position_ < source_.size() && Peek() != L'\n') {
+        Advance();
+    }
+}
+
+void Lexer::SkipBlockComment(std::vector<Diagnostic>& diagnostics, int line, int column)
+{
+    Advance();
+    Advance();
+    while (position_ < source_.size()) {
+        if (Peek() == L'*' && Peek(1) == L'/') {
+            Advance();
+            Advance();
+            return;
+        }
+        Advance();
+    }
+    diagnostics.push_back(Diagnostic{line, column, L"块注释缺少结束标记 '*/'"});
+}
+
+void Lexer::ScanIdentifier(std::vector<Token>& tokens, int line, int column)
+{
+    const std::size_t start = position_;
+    while (IsIdentifierPart(Peek())) {
+        Advance();
+    }
+
+    const i18nString text = source_.substr(start, position_ - start);
+    const auto& keywords = KeyWords();
+    const auto it = keywords.find(text);
+    if (it != keywords.end()) {
+        Emit(tokens, it->second, text, line, column);
+    } else {
+        Emit(tokens, TokenType::Identifier, text, line, column);
+    }
+}
+
+void Lexer::ScanNumber(std::vector<Token>& tokens, int line, int column)
+{
+    const std::size_t start = position_;
+    while (IsAsciiDigit(Peek())) {
+        Advance();
+    }
+    // 小数点后必须跟数字，避免把 "1." 当成数字
+    if (Peek() == L'.' && IsAsciiDigit(Peek(1))) {
+        Advance();
+        while (IsAsciiDigit(Peek())) {
+            Advance();
+        }
+    }
+
+    Emit(tokens, TokenType::Number, source_.substr(start, position_ - start), line, column);
+}
+
+void Lexer::ScanString(std::vector<Token>& tokens, std::vector<Diagnostic>& diagnostics,
+                       int line, int column)
+{
+    Advance();  // 跳过起始引号
+
+    i18nString value;
+    bool terminated = false;
+
+    while (position_ < source_.size()) {
+        const i18nChar ch = Peek();
+
+        if (ch == L'"') {
+            Advance();
+            terminated = true;
+            break;
+        }
+
+        if (ch == L'\\') {
+            Advance();
+            if (position_ >= source_.size()) {
+                break;
+            }
+            switch (Peek()) {
+            case L'n': value.push_back(L'\n'); break;
+            case L't': value.push_back(L'\t'); break;
+            case L'r': value.push_back(L'\r'); break;
+            case L'\\': value.push_back(L'\\'); break;
+            case L'"': value.push_back(L'"'); break;
+            case L'\'': value.push_back(L'\''); break;
+            default: value.push_back(Peek()); break;
+            }
+            Advance();
+            continue;
+        }
+
+        value.push_back(ch);
+        Advance();
+    }
+
+    if (!terminated) {
+        diagnostics.push_back(Diagnostic{line, column, L"字符串缺少结束引号"});
+    }
+
+    Token token;
+    token.type = TokenType::String;
+    token.lexeme = value;
+    token.literal = value;
+    token.line = line;
+    token.column = column;
+    tokens.push_back(std::move(token));
+}
+
+std::vector<Token> Lexer::Scan(std::vector<Diagnostic>& diagnostics)
+{
+    std::vector<Token> tokens;
+
+    while (position_ < source_.size()) {
+        const int line = line_;
+        const int column = column_;
+        const i18nChar ch = Peek();
+
+        // 空白
+        if (ch == L' ' || ch == L'\t' || ch == L'\r' || ch == L'\n') {
+            Advance();
+            continue;
+        }
+
+        // 注释
+        if (ch == L'/' && Peek(1) == L'/') {
+            SkipLineComment();
+            continue;
+        }
+        if (ch == L'/' && Peek(1) == L'*') {
+            SkipBlockComment(diagnostics, line, column);
+            continue;
+        }
+
+        // 标识符与关键字
+        if (IsIdentifierStart(ch)) {
+            ScanIdentifier(tokens, line, column);
+            continue;
+        }
+
+        // 数字
+        if (IsAsciiDigit(ch)) {
+            ScanNumber(tokens, line, column);
+            continue;
+        }
+
+        // 字符串
+        if (ch == L'"') {
+            ScanString(tokens, diagnostics, line, column);
+            continue;
+        }
+
+        Advance();
+        switch (ch) {
+        case L'(':
+            Emit(tokens, TokenType::LeftParen, L"(", line, column);
+            break;
+        case L')':
+            Emit(tokens, TokenType::RightParen, L")", line, column);
+            break;
+        case L'{':
+            Emit(tokens, TokenType::LeftBrace, L"{", line, column);
+            break;
+        case L'}':
+            Emit(tokens, TokenType::RightBrace, L"}", line, column);
+            break;
+        case L',':
+            Emit(tokens, TokenType::Comma, L",", line, column);
+            break;
+        case L';':
+            Emit(tokens, TokenType::Semicolon, L";", line, column);
+            break;
+        case L':':
+            Emit(tokens, TokenType::Colon, L":", line, column);
+            break;
+        case L'+':
+            Emit(tokens, Match(L'=') ? TokenType::PlusAssign : TokenType::Plus, L"+", line, column);
+            break;
+        case L'-':
+            Emit(tokens, Match(L'=') ? TokenType::MinusAssign : TokenType::Minus, L"-", line, column);
+            break;
+        case L'*':
+            Emit(tokens, Match(L'=') ? TokenType::StarAssign : TokenType::Star, L"*", line, column);
+            break;
+        case L'/':
+            Emit(tokens, Match(L'=') ? TokenType::SlashAssign : TokenType::Slash, L"/", line, column);
+            break;
+        case L'%':
+            Emit(tokens, Match(L'=') ? TokenType::PercentAssign : TokenType::Percent, L"%", line, column);
+            break;
+        case L'=':
+            Emit(tokens, Match(L'=') ? TokenType::EqualEqual : TokenType::Assign, L"=", line, column);
+            break;
+        case L'!':
+            Emit(tokens, Match(L'=') ? TokenType::BangEqual : TokenType::Bang, L"!", line, column);
+            break;
+        case L'<':
+            Emit(tokens, Match(L'=') ? TokenType::LessEqual : TokenType::Less, L"<", line, column);
+            break;
+        case L'>':
+            Emit(tokens, Match(L'=') ? TokenType::GreaterEqual : TokenType::Greater, L">", line, column);
+            break;
+        case L'&':
+            if (Match(L'&')) {
+                Emit(tokens, TokenType::AndAnd, L"&&", line, column);
+            } else {
+                diagnostics.push_back(Diagnostic{line, column, L"逻辑与需要写作 '&&'"});
+            }
+            break;
+        case L'|':
+            if (Match(L'|')) {
+                Emit(tokens, TokenType::OrOr, L"||", line, column);
+            } else {
+                diagnostics.push_back(Diagnostic{line, column, L"逻辑或需要写作 '||'"});
+            }
+            break;
+        default:
+            diagnostics.push_back(Diagnostic{line, column, i18nString(L"未知字符 '") + ch + L"'"});
+            break;
+        }
+    }
+
+    Emit(tokens, TokenType::EndOfFile, L"", line_, column_);
+    return tokens;
+}
+
+}  // namespace otne

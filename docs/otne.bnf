@@ -1,0 +1,138 @@
+(* ==========================================================================
+   Otne 语言语法定义（BNF / ISO/IEC 14977 风格）
+   版本：v0.2.0
+   对应实现：otne/src/otne_lexer.cpp、otne/src/otne_parser.cpp
+
+   表示法约定：
+     ::=        定义为
+     |          择一
+     { x }      x 重复 0 次或多次
+     [ x ]      x 可选（出现 0 次或 1 次）
+     "x"        终结符，即源码中逐字出现的文本
+     <...>      自然语言说明
+     (* ... *)  注释
+   ========================================================================== *)
+
+
+(* ------------------------------ 程序结构 ------------------------------ *)
+
+program     ::= { import | function } EOF ;
+
+(* 顶层只允许 import 声明与函数定义，两者可任意交错，顺序不影响语义；
+   顶层出现其它语句为语法错误。程序入口为函数 main。 *)
+
+import      ::= "import" IDENT ";" ;
+
+(* import 目前为保留语法：模块名不做校验，也不产生任何效果，
+   内建函数（print / println / printf / str / int / float / len / type）
+   始终全局可用。 *)
+
+function    ::= "func" IDENT "(" [ params ] ")" [ ":" type ] block ;
+params      ::= param { "," param } ;
+param       ::= IDENT [ ":" type ] ;
+type        ::= "int" | "float" | "string" | "bool" | "any" ;
+
+
+(* ------------------------------- 语句 -------------------------------- *)
+
+block       ::= "{" { statement } "}" ;
+
+statement   ::= block
+              | var_decl
+              | if_stmt
+              | while_stmt
+              | for_stmt
+              | break_stmt
+              | continue_stmt
+              | return_stmt
+              | expr_stmt ;
+
+(* 两种变量声明写法：
+     let/var/const 前置       let n: int = 1;
+     类型前置                 int total = 0;               *)
+var_decl    ::= ( "let" | "var" | "const" ) IDENT [ ":" type ] "=" expr ";"
+              | type IDENT [ ":" type ] "=" expr ";" ;
+
+if_stmt     ::= "if" expr block { "elif" expr block } [ "else" block ] ;
+while_stmt  ::= "while" expr block ;
+
+(* C 风格 for：三个部分都可省略，两个 ';' 必须存在 *)
+for_stmt    ::= "for" "(" [ init ] ";" [ expr ] ";" [ expr ] ")" block ;
+init        ::= var_decl | expr ";" ;
+
+break_stmt  ::= "break" ";" ;
+continue_stmt ::= "continue" ";" ;
+return_stmt ::= "return" [ expr ] ";" ;
+expr_stmt   ::= expr ";" ;
+
+
+(* ------------------------------ 表达式 ------------------------------- *)
+
+(* 优先级由低到高：赋值 < || < && < == != < 比较 < + - < * / % < 一元
+   赋值右结合；赋值号左侧必须能解析为变量（IDENT），否则报语法错误。 *)
+
+expr        ::= assignment ;
+assignment  ::= or_expr [ assign_op assignment ] ;
+assign_op   ::= "=" | "+=" | "-=" | "*=" | "/=" | "%=" ;
+or_expr     ::= and_expr { "||" and_expr } ;
+and_expr    ::= equality { "&&" equality } ;
+equality    ::= comparison { ( "==" | "!=" ) comparison } ;
+comparison  ::= term { ( "<" | "<=" | ">" | ">=" ) term } ;
+term        ::= factor { ( "+" | "-" ) factor } ;
+factor      ::= unary { ( "*" | "/" | "%" ) unary } ;
+unary       ::= ( "!" | "-" ) unary | call ;
+call        ::= primary { "(" [ args ] ")" } ;
+args        ::= expr { "," expr } ;
+primary     ::= NUMBER
+              | STRING
+              | "true" | "false" | "null"
+              | IDENT
+              | "(" expr ")" ;
+
+(* 条件表达式不强制括号：if a == 1 { } 与 if (a == 1) { } 等价。 *)
+
+
+(* ------------------------------- 词法 -------------------------------- *)
+
+(* 词法单元之间的空白与注释被丢弃，不产生 Token。 *)
+whitespace  ::= " " | "\t" | "\r" | "\n" ;
+line_comment  ::= "//" { <除换行以外的任意字符> } ;
+block_comment ::= "/*" { <任意字符> } "*/" ;   (* 可跨行；未闭合为词法错误 *)
+
+(* 标识符与关键字仅支持 ASCII 字母、数字、下划线；中文只可出现在字符串与注释中 *)
+IDENT       ::= ident_start { ident_part } ;
+ident_start ::= letter | "_" ;
+ident_part  ::= letter | digit | "_" ;
+letter      ::= "A" .. "Z" | "a" .. "z" ;
+digit       ::= "0" .. "9" ;
+
+(* 小数点后必须跟数字："1.5" 是数字，"1." 解析为数字 1 加未知字符 '.' *)
+NUMBER      ::= digit { digit } [ "." digit { digit } ] ;
+
+(* 字符串必须用双引号闭合；未闭合为词法错误 *)
+STRING      ::= '"' { str_char } '"' ;
+str_char    ::= escape | <除 '"'、'\'、换行以外的任意字符> ;
+escape      ::= "\" ( "n" | "t" | "r" | "\" | '"' | "'" | <任意其它字符> ) ;
+
+(* 合法转义：\n \t \r \\ \" \'
+   其它转义（如 \a）按去掉反斜杠处理，即保留字符本身。 *)
+
+
+(* --------------------------- 关键字与类型 ----------------------------- *)
+
+keyword     ::= "import" | "func" | "let" | "var" | "const"
+              | "if" | "elif" | "else" | "while" | "for"
+              | "break" | "continue" | "return"
+              | "true" | "false" | "null"
+              | "int" | "float" | "string" | "bool" | "any" ;
+
+(* 类型标注为值类型，作用于变量、参数与返回值，运行时检查；
+   float 标注接受 int。目前没有数组、对象或自定义类型。 *)
+
+(* --------------------------- 运算符与分隔符 --------------------------- *)
+
+(* 分隔符    ( ) { } , ; :
+   算术      + - * / %
+   比较      < <= > >= == !=
+   逻辑      && || !
+   赋值      = += -= *= /= %=       *)

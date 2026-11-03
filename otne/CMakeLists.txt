@@ -1,21 +1,19 @@
-﻿cmake_minimum_required(VERSION 3.16)
-set(CMAKE_CXX_STANDARD 17)
+﻿# otne 解释器可执行程序
 
-# MSVC utf-8
-add_compile_options("$<$<C_COMPILER_ID:MSVC>:/source-charset:utf-8>")
-add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/source-charset:utf-8>")
-
-# GNU utf-8
-add_compile_options("$<$<C_COMPILER_ID:GNU>:-fexec-charset=GBK>")
-add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-fexec-charset=GBK>")
-add_compile_options("$<$<C_COMPILER_ID:GNU>:-finput-charset=utf-8>")
-add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-finput-charset=utf-8>")
-
-
-file(GLOB SRCS
-	"src/*"
+add_executable(otne
+	src/otne_main.cpp
+	src/otne_file.cpp
+	src/otne_lexer.cpp
+	src/otne_parser.cpp
+	src/otne_value.cpp
+	src/otne_interpreter.cpp
 )
 
-# set(EXECUTABLE_OUTPUT_PATH "../../")
+target_include_directories(otne PRIVATE src)
 
-add_executable (otne ${SRCS})
+# 源码与执行字符集统一使用 UTF-8
+target_compile_options(otne PRIVATE
+	$<$<CXX_COMPILER_ID:MSVC>:/utf-8>
+	$<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-finput-charset=UTF-8>
+	$<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall -Wextra>
+)

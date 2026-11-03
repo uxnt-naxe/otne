@@ -1,0 +1,33 @@
+
+func fib_rec(n: int): int
+{
+    if (n < 2) {
+        return n;
+    }
+    return fib_rec(n - 1) + fib_rec(n - 2);
+}
+
+// Fibonacci.otne —— 递归、循环与变量
+
+func main() {
+    // 递归写法
+    for (let i = 0; i < 20; i += 1) {
+        print(fib_rec(i));
+        print(" ");
+    }
+    println("");
+
+    // 迭代写法
+    let a = 0;
+    let b = 1;
+    let i = 0;
+    while (i < 20) {
+        print(a);
+        print(" ");
+        let next = a + b;
+        a = b;
+        b = next;
+        i += 1;
+    }
+    println("");
+}

@@ -1,11 +1,19 @@
-// "module"."module".rrr
-
-zh > test = "qwe" ; ~
-
-// hello world!
-// module
+// HelloWorld.otne —— 你好，世界
+// 运行：otne resources/code/HelloWorld.otne
 import stdio;
-// func
-fn main () {
-    printf("hello world!");
+import foo;
+
+func describe(value: any): string {
+    return type(value) + ": " + value;
+}
+
+
+func main()
+{
+    let count: int = 42;
+    float ratio = 0.5;
+    const name = "Otne";
+
+    println("EEEE:" + ratio * 5 + describe(0.5));
+    println("Hello, World! 666");
 }

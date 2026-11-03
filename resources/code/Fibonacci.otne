@@ -1,0 +1,31 @@
+// Fibonacci.otne —— 递归、循环与变量
+
+func fib(n: int): int {
+    if (n < 2) {
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
+
+func main() {
+    // 递归写法
+    for (let i = 0; i < 10; i += 1) {
+        print(fib(i));
+        print(" ");
+    }
+    println("");
+
+    // 迭代写法
+    let a = 0;
+    let b = 1;
+    let i = 0;
+    while (i < 10) {
+        print(a);
+        print(" ");
+        let next = a + b;
+        a = b;
+        b = next;
+        i += 1;
+    }
+    println("");
+}
