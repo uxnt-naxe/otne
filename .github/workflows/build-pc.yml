@@ -1,0 +1,81 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: build-${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux
+            os: ubuntu-latest
+            artifact: linux
+          - name: windows
+            os: ubuntu-latest
+            artifact: windows
+          - name: macos
+            os: macos-latest
+            artifact: macos
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: prepare (linux / windows cross)
+        if: matrix.name == 'linux' || matrix.name == 'windows'
+        run: |
+          sudo apt update
+          sudo apt install clang lld cmake mingw-w64 -y
+
+      - name: prepare (macos)
+        if: matrix.name == 'macos'
+        run: |
+          brew install cmake || true
+          xcode-select -p || true
+
+      - name: cmake_config (linux)
+        if: matrix.name == 'linux'
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+
+      - name: cmake_config (windows)
+        if: matrix.name == 'windows'
+        run: |
+          mkdir build && cd build
+          cmake .. \
+            -DCMAKE_SYSTEM_NAME=Windows \
+            -DCMAKE_C_COMPILER=clang \
+            -DCMAKE_CXX_COMPILER=clang++ \
+            -DCMAKE_C_COMPILER_TARGET=x86_64-w64-windows-gnu \
+            -DCMAKE_CXX_COMPILER_TARGET=x86_64-w64-windows-gnu \
+            -DCMAKE_RC_COMPILER=x86_64-w64-mingw32-windres \
+            -DCMAKE_FIND_ROOT_PATH=/usr/x86_64-w64-mingw32
+
+      - name: cmake_config (macos)
+        if: matrix.name == 'macos'
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+
+      - name: make
+        run: cmake --build build
+
+      - name: remove useless files
+        run: |
+          rm -rf .git
+          find . -name "*.cpp" -delete
+          find . -name "*.h" -delete
+          find . -name "*.hpp" -delete
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: build
