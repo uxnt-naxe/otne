@@ -22,7 +22,7 @@ jobs:
       - name: remove useless files
         run: rm -rf .git; rm -rf $(find . | grep ".cpp") ; rm -rf $(find . | grep ".h"); rm -rf $(find . | grep ".hpp")
       - name: Upload a Build Artifact
-        uses: actions/upload-artifactv4
+        uses: actions/upload-artifact@v4
         with:
           name: windows
           path: build
