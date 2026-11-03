@@ -104,7 +104,7 @@ jobs:
         run: |
           cp $(find /usr -name "libgcc_s_seh-1.dll" | head -1) build/bin/
           cp $(find /usr -name "libstdc++-6.dll" | head -1) build/bin/
-          wine build/bin/otne.exe resources/code/HelloWorld.otne
+          xvfb-run -a wine build/bin/otne.exe resources/code/HelloWorld.otne
           
       - name: run (macos)
         if: matrix.name == 'macos'
