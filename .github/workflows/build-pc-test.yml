@@ -1,0 +1,110 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: build-${{ matrix.name }}-${{ matrix.compiler }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux
+            os: ubuntu-latest
+            artifact: linux-clang
+            compiler: clang
+          - name: linux
+            os: ubuntu-latest
+            artifact: linux-gcc
+            compiler: gcc
+          - name: windows
+            os: ubuntu-latest
+            artifact: windows-clang
+            compiler: clang
+          - name: windows
+            os: ubuntu-latest
+            artifact: windows-gcc
+            compiler: gcc
+          - name: macos
+            os: macos-latest
+            artifact: macos-clang
+            compiler: clang
+          # macOS 上 GCC 实际是 Apple clang 的别名，不单独跑 gcc
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: prepare (ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt update
+          sudo apt install clang lld gcc g++ cmake mingw-w64 -y
+
+      - name: prepare (macos)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install cmake || true
+          xcode-select -p || true
+
+      - name: cmake_config (linux clang)
+        if: matrix.name == 'linux' && matrix.compiler == 'clang'
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+
+      - name: cmake_config (linux gcc)
+        if: matrix.name == 'linux' && matrix.compiler == 'gcc'
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+
+      - name: cmake_config (windows clang)
+        if: matrix.name == 'windows' && matrix.compiler == 'clang'
+        run: |
+          mkdir build && cd build
+          cmake .. \
+            -DCMAKE_SYSTEM_NAME=Windows \
+            -DCMAKE_C_COMPILER=clang \
+            -DCMAKE_CXX_COMPILER=clang++ \
+            -DCMAKE_C_COMPILER_TARGET=x86_64-w64-windows-gnu \
+            -DCMAKE_CXX_COMPILER_TARGET=x86_64-w64-windows-gnu \
+            -DCMAKE_RC_COMPILER=x86_64-w64-mingw32-windres \
+            -DCMAKE_FIND_ROOT_PATH=/usr/x86_64-w64-mingw32
+
+      - name: cmake_config (windows gcc)
+        if: matrix.name == 'windows' && matrix.compiler == 'gcc'
+        run: |
+          mkdir build && cd build
+          cmake .. \
+            -DCMAKE_SYSTEM_NAME=Windows \
+            -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
+            -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ \
+            -DCMAKE_RC_COMPILER=x86_64-w64-mingw32-windres \
+            -DCMAKE_FIND_ROOT_PATH=/usr/x86_64-w64-mingw32
+
+      - name: cmake_config (macos clang)
+        if: matrix.name == 'macos' && matrix.compiler == 'clang'
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+
+      - name: make
+        run: cmake --build build
+
+      - name: remove useless files
+        run: |
+          rm -rf .git
+          find . -name "*.cpp" -delete
+          find . -name "*.h" -delete
+          find . -name "*.hpp" -delete
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: build
