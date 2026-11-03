@@ -73,7 +73,8 @@ jobs:
             -DCMAKE_C_COMPILER_TARGET=x86_64-w64-windows-gnu \
             -DCMAKE_CXX_COMPILER_TARGET=x86_64-w64-windows-gnu \
             -DCMAKE_RC_COMPILER=x86_64-w64-mingw32-windres \
-            -DCMAKE_FIND_ROOT_PATH=/usr/x86_64-w64-mingw32
+            -DCMAKE_FIND_ROOT_PATH=/usr/x86_64-w64-mingw32 \
+            -DCMAKE_EXE_LINKER_FLAGS="-static -static-libgcc -static-libstdc++"
 
       - name: cmake_config (windows gcc)
         if: matrix.name == 'windows' && matrix.compiler == 'gcc'
@@ -84,7 +85,8 @@ jobs:
             -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
             -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ \
             -DCMAKE_RC_COMPILER=x86_64-w64-mingw32-windres \
-            -DCMAKE_FIND_ROOT_PATH=/usr/x86_64-w64-mingw32
+            -DCMAKE_FIND_ROOT_PATH=/usr/x86_64-w64-mingw32 \
+            -DCMAKE_EXE_LINKER_FLAGS="-static -static-libgcc -static-libstdc++"
 
       - name: cmake_config (macos clang)
         if: matrix.name == 'macos' && matrix.compiler == 'clang'
@@ -101,10 +103,7 @@ jobs:
 
       - name: run (windows cross via wine)
         if: matrix.name == 'windows'
-        run: |
-          cp $(find /usr -name "libgcc_s_seh-1.dll" | head -1) build/bin/
-          cp $(find /usr -name "libstdc++-6.dll" | head -1) build/bin/
-          xvfb-run -a wine build/bin/otne.exe resources/code/HelloWorld.otne
+        run: xvfb-run -a wine build/bin/otne.exe resources/code/HelloWorld.otne
           
       - name: run (macos)
         if: matrix.name == 'macos'
