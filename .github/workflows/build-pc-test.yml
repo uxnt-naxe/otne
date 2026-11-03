@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-unix:
     name: build-${{ matrix.name }}-${{ matrix.compiler }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -34,7 +34,6 @@ jobs:
             os: macos-latest
             artifact: macos-clang
             compiler: clang
-          # macOS 上 GCC 实际是 Apple clang 的别名，不单独跑 gcc
 
     steps:
       - uses: actions/checkout@v4
@@ -108,3 +107,36 @@ jobs:
         with:
           name: ${{ matrix.artifact }}
           path: build
+
+  build-msvc:
+    name: build-windows-msvc
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: cmake_config
+        run: |
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 17 2022" -A x64
+
+      - name: make
+        run: cmake --build build --config Release
+
+      - name: remove useless files
+        run: |
+          rm -rf .git
+          find . -name "*.cpp" -delete
+          find . -name "*.h" -delete
+          find . -name "*.hpp" -delete
+        shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-msvc
+          path: build/Release
