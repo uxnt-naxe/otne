@@ -1,11 +1,5 @@
 
-func fib_rec(n: int): int
-{
-    if (n < 2) {
-        return n;
-    }
-    return fib_rec(n - 1) + fib_rec(n - 2);
-}
+func fib_rec(n: int): int { if (n < 2) { ret n; } ret fib_rec(n - 1) + fib_rec(n - 2); }
 
 // Fibonacci.otne —— 递归、循环与变量
 
