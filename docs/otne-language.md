@@ -1,4 +1,4 @@
-# Otne 语言说明（v0.2.0）
+# Otne 语言说明（v0.0.2）
 
 > 本文档描述当前解释器实现的语法与语义。示例代码位于 [`resources/code/`](../resources/code/)。
 
