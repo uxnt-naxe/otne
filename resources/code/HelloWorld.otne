@@ -1,7 +1,7 @@
 // HelloWorld.otne —— 你好，世界
 // 运行：otne resources/code/HelloWorld.otne
-// import stdio;
-// import foo;
+// use stdio;
+// use foo;
 
 func describe(value: any): string {
     return type(value) + ": " + value;
