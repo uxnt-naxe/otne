@@ -120,9 +120,9 @@ escape      ::= "\" ( "n" | "t" | "r" | "\" | '"' | "'" | <任意其它字符> )
 
 (* --------------------------- 关键字与类型 ----------------------------- *)
 
-keyword     ::= "import" | "func" | "let" | "var" | "const"
+keyword     ::= "use" | "func" | "let" | "var" | "const"
               | "if" | "elif" | "else" | "while" | "for"
-              | "break" | "continue" | "return"
+              | "break" | "continue" | "ret"
               | "true" | "false" | "null"
               | "int" | "float" | "string" | "bool" | "any" ;
 
