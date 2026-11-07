@@ -7,12 +7,14 @@ func describe(value: any): string {
     return type(value) + ": " + value;
 }
 
+func HelloWorld() : string { ret "Hello World!"; }
+
 func main()
 {
     let count: int = 42;
     float ratio = 0.5;
     const name = "Otne";
-
+    println( HelloWorld() );
     println ( "ratio:" + ratio * 5 + " " + describe(0.5) );
     println ( name + " " + "Hello!" );
 }
