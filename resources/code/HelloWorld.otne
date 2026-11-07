@@ -4,7 +4,7 @@
 // use foo;
 
 func describe(value: any): string {
-    return type(value) + ": " + value;
+    ret type(value) + ": " + value;
 }
 
 func HelloWorld() : string { ret "Hello World!"; }
