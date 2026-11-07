@@ -1,11 +1,6 @@
 // Fibonacci.otne —— 递归、循环与变量
 
-func fib(n: int): int {
-    if (n < 2) {
-        ret n;
-    }
-    ret fib(n - 1) + fib(n - 2);
-}
+func fib(n: int): int { if (n < 2) { ret n; } ret fib(n - 1) + fib(n - 2); }
 
 func main() {
     // 递归写法
