@@ -3,9 +3,7 @@
 // use stdio;
 // use foo;
 
-func describe(value: any): string {
-    ret type(value) + ": " + value;
-}
+func describe(value: any): string { ret type(value) + ": " + value; }
 
 func HelloWorld() : string { ret "Hello World!"; }
 
