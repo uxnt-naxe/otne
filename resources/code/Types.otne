@@ -1,7 +1,7 @@
 // Types.otne —— 值类型、类型标注与内建函数
 
 func describe(value: any): string {
-    return type(value) + ": " + value;
+    ret type(value) + ": " + value;
 }
 
 func main() {
