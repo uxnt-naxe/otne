@@ -17,17 +17,17 @@
 
 ## 设计目标
 
-- **易读**：语法接近 Java / Go，关键字统一使用英文
+- **易读**：语法接近 Rust / Java / Go，关键字统一使用英文
 - **安全**：静态位置信息贯穿错误报告，运行时错误精确到行:列
 - **可翻译**：语法结构简单，便于后续实现到 C / C++ / Rust / Python 的转换器
 - **国际化**：源码统一为 UTF-8，内部按 Unicode 处理
 
 ## 程序结构
 
-一个 `.otne` 源文件由 **import 声明** 与 **函数定义** 组成，解释器从 `main` 开始执行。
+一个 `.otne` 源文件由 **use 声明** 与 **函数定义** 组成，解释器从 `main` 开始执行。
 
 ```otne
-import stdio;
+use stdio;
 
 func main() {
     println("Hello, World!");
@@ -71,7 +71,7 @@ func main() {
 ```otne
 let count: int = 0;      // 标注写法
 int total = 0;           // 类型前置写法
-func half(value: float): float { return value / 2; }
+func half(value: float): float { ret value / 2; }
 ```
 
 支持的标注：`int` `float` `string` `bool` `any`（`float` 标注接受 `int`）。
@@ -141,7 +141,7 @@ func abs(n: int): int {
     if (n < 0) {
         return -n;
     }
-    return n;
+    ret n;
 }
 ```
 
@@ -173,11 +173,11 @@ func 函数名(参数名: 类型, ...): 返回类型 {
 
 | 分类 | 关键字 |
 | --- | --- |
-| 模块 | `import` |
+| 模块 | `use` |
 | 声明 | `func`、`let`、`var`、`const` |
 | 类型 | `int`、`float`、`string`、`bool`、`any` |
 | 字面量 | `true`、`false`、`null` |
-| 流程控制 | `if`、`elif`、`else`、`while`、`for`、`break`、`continue`、`return` |
+| 流程控制 | `if`、`elif`、`else`、`while`、`for`、`break`、`continue`、`ret` |
 
 > 关键字与标识符仅支持 ASCII 字母、数字与下划线；中文只能出现在字符串与注释中。
 
