@@ -79,7 +79,7 @@ make help                                         # 查看全部目标
 
 ```otne
 // HelloWorld.otne
-import stdio;
+use stdio;
 
 func main() {
     println("Hello, World!");
