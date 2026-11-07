@@ -2,12 +2,10 @@
 
 use stdio;
 
-func greet(name: string): string {
-    ret "Hello, " + name + "!";
-}
+func greet(name: string): string { ret "Hello, " + name + "!"; }
 
 func main() {
-    println(greet("Universe"));
-    println(greet("中引"));
-    println("1 + 2 = " + (1 + 2));
+    println( greet("Universe") );
+    println( greet("中引") );
+    println( "1 + 2 = " + (1 + 2) );
 }
