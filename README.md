@@ -80,9 +80,9 @@ make help                                         # 查看全部目标
 ```otne
 // HelloWorld.otne
 use stdio;
-
+func HelloWorld() : string { ret "Hello World!"; }
 func main() {
-    println("Hello, World!");
+    println(HelloWorld());
 }
 ```
 
