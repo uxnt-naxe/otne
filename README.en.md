@@ -79,7 +79,7 @@ make help                                         # List all targets
 
 ```otne
 // HelloWorld.otne
-import stdio;
+use stdio;
 
 func main() {
     println("Hello, World!");
