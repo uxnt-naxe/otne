@@ -17,13 +17,13 @@ bool IsIdentifierPart(i18nChar ch) { return IsIdentifierStart(ch) || IsAsciiDigi
 const std::unordered_map<i18nString, TokenType>& KeyWords()
 {
     static const std::unordered_map<i18nString, TokenType> keywords = {
-        {L"import", TokenType::Import},     {L"func", TokenType::Func},
+        {L"use", TokenType::Import},     {L"func", TokenType::Func},
         {L"let", TokenType::Let},           {L"var", TokenType::Var},
         {L"const", TokenType::Const},       {L"if", TokenType::If},
         {L"elif", TokenType::Elif},         {L"else", TokenType::Else},
         {L"while", TokenType::While},       {L"for", TokenType::For},
         {L"break", TokenType::Break},       {L"continue", TokenType::Continue},
-        {L"return", TokenType::Return},     {L"true", TokenType::True},
+        {L"ret", TokenType::Return},        {L"true", TokenType::True},
         {L"false", TokenType::False},       {L"null", TokenType::Null},
         {L"int", TokenType::IntType},       {L"float", TokenType::FloatType},
         {L"string", TokenType::StringType}, {L"bool", TokenType::BoolType},
