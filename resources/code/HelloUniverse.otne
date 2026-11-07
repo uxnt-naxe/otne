@@ -3,7 +3,7 @@
 use stdio;
 
 func greet(name: string): string {
-    return "Hello, " + name + "!";
+    ret "Hello, " + name + "!";
 }
 
 func main() {
