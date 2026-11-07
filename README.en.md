@@ -17,7 +17,7 @@
 
 Otne is a programming language designed by Uxnt and uxnt-naxe since March 6, 2022. Its syntax follows Java and Go.
 
-Version 0.2.0 is a **tree-walking interpreter** written in C++17: lexer, recursive-descent parser, runtime environment and builtins — it actually executes `.otne` programs.
+Version 0.0.2 is a **tree-walking interpreter** written in C++17: lexer, recursive-descent parser, runtime environment and builtins — it actually executes `.otne` programs.
 
 ## Quick Start
 
