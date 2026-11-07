@@ -6,6 +6,6 @@ func greet(name: string): string { ret "Hello, " + name + "!"; }
 
 func main() {
     println( greet("Universe") );
-    println( greet("中引") );
+    println( greet("Otne") );
     println( "1 + 2 = " + (1 + 2) );
 }
