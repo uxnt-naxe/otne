@@ -1,6 +1,6 @@
 // HelloUniverse.otne —— 函数、参数类型与字符串拼接
 
-import stdio;
+use stdio;
 
 func greet(name: string): string {
     return "Hello, " + name + "!";
