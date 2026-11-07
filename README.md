@@ -77,16 +77,16 @@ make help                                         # 查看全部目标
 
 ## 示例
 
-```otne
+```rs
 // HelloWorld.otne
 use stdio;
 func HelloWorld() : string { ret "Hello World!"; }
 func main() {
-    println(HelloWorld());
+    println( HelloWorld() );
 }
 ```
 
-```text
+```
 $ otne resources/code/HelloWorld.otne
 Hello, World!
 ```
