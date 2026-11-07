@@ -2,9 +2,9 @@
 
 func fib(n: int): int {
     if (n < 2) {
-        return n;
+        ret n;
     }
-    return fib(n - 1) + fib(n - 2);
+    ret fib(n - 1) + fib(n - 2);
 }
 
 func main() {
