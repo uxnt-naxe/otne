@@ -93,10 +93,10 @@ Hello, World!
 
 ## Features
 
-- **Concise syntax**: Java / Go style, with English-only keywords
+- **Concise syntax**: Rust / Java / Go style, with English-only keywords
 - **Optional type annotations**: `let n: int = 1`, `func half(v: float): float`
 - **Dynamic values**: `int`, `float`, `string`, `bool`, `null`; `+` concatenates strings
-- **Full control flow**: `if` / `elif` / `else`, `while`, C-style `for`, `break` / `continue` / `return`
+- **Full control flow**: `if` / `elif` / `else`, `while`, C-style `for`, `break` / `continue` / `ret`
 - **First-class functions**: recursion and assignment to variables
 - **Precise diagnostics**: lexical, syntax and runtime errors all report `file:line:column`
 
